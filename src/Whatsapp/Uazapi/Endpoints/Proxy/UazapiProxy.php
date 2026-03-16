@@ -59,7 +59,7 @@ class UazapiProxy extends UazapiInstanceEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid paylout or proxy!");
+                throw new Exception("[UAZAPI] Invalid payload or proxy! - ".$response->body());
             }elseif($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid/Expired Token!");
             }else{

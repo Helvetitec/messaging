@@ -176,7 +176,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload!");
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
