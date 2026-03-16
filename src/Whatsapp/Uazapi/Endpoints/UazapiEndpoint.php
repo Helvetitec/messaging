@@ -19,8 +19,8 @@ abstract class UazapiEndpoint
      *
      * @return string
      */
-    protected static function root(): string
+    protected function root(): string
     {
-        return "https://".self::$subdomain.".uazapi.com/";
+        return "https://".$this->subdomain.".uazapi.com/";
     }
 }

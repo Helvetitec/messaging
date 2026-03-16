@@ -23,7 +23,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      * @param string|null $adminField02
      * @return CreateInstanceResponse
      */
-    public static function createInstance(
+    public function createInstance(
         string $name, 
         string $systemName = "apiLocal", 
         string $fingerPrintProfile = "chrome", 
@@ -32,8 +32,8 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         ?string $adminField02 = null
     ) : CreateInstanceResponse
     {
-        $url = self::root().'instance/init';
-        $response = Http::asJson()->withHeader('admintoken', self::$adminToken)->post($url, [
+        $url = $this->root().'instance/init';
+        $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url, [
             "name" => $name,
             "systemName" => $systemName,
             "adminField01" => $adminField01,
@@ -75,10 +75,10 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      *
      * @return Collection
      */
-    public static function listInstances(): Collection
+    public function listInstances(): Collection
     {
-        $url = self::root().'instance/all';
-        $response = Http::withHeader('admintoken', self::$adminToken)->get($url);
+        $url = $this->root().'instance/all';
+        $response = Http::withHeader('admintoken', $this->adminToken)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid/Expired Token!");
@@ -109,10 +109,10 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      * @param string|null $adminField02
      * @return UazapiInstance
      */
-    public static function updateAdminFields(string $instanceId, ?string $adminField01 = null, ?string $adminField02 = null): UazapiInstance
+    public function updateAdminFields(string $instanceId, ?string $adminField01 = null, ?string $adminField02 = null): UazapiInstance
     {
-        $url = self::root().'instance/init';
-        $response = Http::asJson()->withHeader('admintoken', self::$adminToken)->post($url, [
+        $url = $this->root().'instance/init';
+        $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url, [
             "id" => $instanceId,
             "adminField01" => $adminField01,
             "adminField02" => $adminField02
@@ -138,10 +138,10 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      *
      * @return GlobalWebhookResponse
      */
-    public static function showGlobalWebhook(): GlobalWebhookResponse
+    public function showGlobalWebhook(): GlobalWebhookResponse
     {
-        $url = self::root().'globalwebhook';
-        $response = Http::withHeader('admintoken', self::$adminToken)->get($url);
+        $url = $this->root().'globalwebhook';
+        $response = Http::withHeader('admintoken', $this->adminToken)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid/Expired Token!");
@@ -166,10 +166,10 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      * @param array $excludedMessages
      * @return GlobalWebhookResponse
      */
-    public static function configGlobalWebhook(string $url, array $events, array $excludedMessages): GlobalWebhookResponse
+    public function configGlobalWebhook(string $url, array $events, array $excludedMessages): GlobalWebhookResponse
     {
-        $url = self::root().'globalwebhook';
-        $response = Http::asJson()->withHeader('admintoken', self::$adminToken)->post($url, [
+        $url = $this->root().'globalwebhook';
+        $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url, [
              "url" => $url,
             "events" => $events,
             "excludeMessages" => $excludedMessages
@@ -197,10 +197,10 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      *
      * @return boolean
      */
-    public static function restartApplication(): bool
+    public function restartApplication(): bool
     {
-        $url = self::root().'admin/restart';
-        $response = Http::asJson()->withHeader('admintoken', self::$adminToken)->post($url);
+        $url = $this->root().'admin/restart';
+        $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url);
         return $response->successful();
     }
 }

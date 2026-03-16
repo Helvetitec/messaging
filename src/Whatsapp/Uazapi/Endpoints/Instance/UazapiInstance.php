@@ -19,14 +19,14 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      * @param string|null $phone
      * @return ConnectInstanceResponse
      */
-    public static function connect(?string $phone = null): ConnectInstanceResponse
+    public function connect(?string $phone = null): ConnectInstanceResponse
     {
         $requestArray = [];
         if(!empty($phone)){
             $requestArray['phone'] = $phone;
         }
-        $url = self::root().'instance/connect';
-        $response = Http::asJson()->withHeader('token', self::$token)->post($url, $requestArray);
+        $url = $this->root().'instance/connect';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url, $requestArray);
         if(!$response->successful()){
             if($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid/Expired Token!");
@@ -59,10 +59,10 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      *
      * @return UazapiInstanceObject
      */
-    public static function disconnect(): UazapiInstanceObject
+    public function disconnect(): UazapiInstanceObject
     {
-        $url = self::root().'instance/disconnect';
-        $response = Http::asJson()->withHeader('token', self::$token)->post($url);
+        $url = $this->root().'instance/disconnect';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url);
         if(!$response->successful()){
             if($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid/Expired Token!");
@@ -82,10 +82,10 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      *
      * @return InstanceStatusResponse
      */
-    public static function status(): InstanceStatusResponse
+    public function status(): InstanceStatusResponse
     {
-        $url = self::root().'instance/status';
-        $response = Http::asJson()->withHeader('token', self::$token)->post($url);
+        $url = $this->root().'instance/status';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url);
         if(!$response->successful()){
             if($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid/Expired Token!");
@@ -117,10 +117,10 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      * @param string $newName
      * @return UazapiInstanceObject
      */
-    public static function updateName(string $newName): UazapiInstanceObject
+    public function updateName(string $newName): UazapiInstanceObject
     {
-        $url = self::root().'instance/updateInstanceName';
-        $response = Http::asJson()->withHeader('token', self::$token)->post($url,[
+        $url = $this->root().'instance/updateInstanceName';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url,[
             'name' => $newName
         ]);
         if(!$response->successful()){
@@ -142,10 +142,10 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      *
      * @return boolean
      */
-    public static function delete(): bool
+    public function delete(): bool
     {
-        $url = self::root().'instance';
-        $response = Http::asJson()->withHeader('token', self::$token)->delete($url);
+        $url = $this->root().'instance';
+        $response = Http::asJson()->withHeader('token', $this->token)->delete($url);
         if(!$response->successful()){
             if($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid/Expired Token!");
@@ -166,7 +166,7 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      * @todo Implement funcionality
      * @return void
      */
-    public static function getPrivacySettings()
+    public function getPrivacySettings()
     {
         throw new NotImplementedException();
     }
@@ -177,7 +177,7 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      * @todo Implement funcionality
      * @return void
      */
-    public static function setPrivacySettings()
+    public function setPrivacySettings()
     {
         throw new NotImplementedException();
     }
@@ -188,10 +188,10 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      * @param WhatsappPresence $presence
      * @return boolean
      */
-    public static function setPresence(WhatsappPresence $presence): bool
+    public function setPresence(WhatsappPresence $presence): bool
     {
-        $url = self::root().'instance/presence';
-        $response = Http::asJson()->withHeader('token', self::$token)->post($url,[
+        $url = $this->root().'instance/presence';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url,[
             'presence' => $presence->value
         ]);
         if(!$response->successful()){
@@ -216,10 +216,10 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      * @param integer $maxDelay
      * @return UazapiInstanceObject
      */
-    public static function setMessageDelay(int $minDelay, int $maxDelay): UazapiInstanceObject
+    public function setMessageDelay(int $minDelay, int $maxDelay): UazapiInstanceObject
     {
-        $url = self::root().'instance/updateDelaySettings';
-        $response = Http::asJson()->withHeader('token', self::$token)->post($url,[
+        $url = $this->root().'instance/updateDelaySettings';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url,[
             'msg_delay_min' => $minDelay,
             'msg_delay_max' => $maxDelay
         ]);

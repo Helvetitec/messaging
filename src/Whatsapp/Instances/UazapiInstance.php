@@ -26,12 +26,10 @@ final class UazapiInstance extends WhatsappInstance
 
     public function __construct(array $data)
     {
-        $this->id = $data['id'];
-        $this->token = $data['token'];
+        parent::__construct($data);
         $this->status = $data['status'];
         $this->paircode = $data['paircode'];
         $this->qrcode = $data['qrcode'];
-        $this->name = $data['name'];
         $this->profileName = $data['profileName'];
         $this->profilePicUrl = $data['profilePicUrl'];
         $this->isBusiness = $data['isBusiness'];
@@ -47,8 +45,6 @@ final class UazapiInstance extends WhatsappInstance
         $this->chatbotIgnoreGroups = $data['chatbot_ignoreGroups'];
         $this->chatbotStopConverstion = $data['chatbot_stopConversation'];
         $this->chatbotStopMinutes = $data['chatbot_stopMinutes'];
-        $this->createdAt = $data['created'];
-        $this->updatedAt = $data['updated'];
         $this->currentPresence = $data['currentPresence'];
     }
 }
