@@ -1,0 +1,27 @@
+{
+    "name": "helvetitec/messaging",
+    "description": "Laravel Messaging package for Whatsapp and others.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Helvetitec\\Messaging\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Roman Wanner",
+            "email": "60240491+daredloco@users.noreply.github.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Helvetitec\\Messaging\\MessagingServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9",
+        "larastan/larastan": "^3.0"
+    }
+}
