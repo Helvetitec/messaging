@@ -15,7 +15,7 @@ class ProxyResponse
         string $proxyUrl,
         string $lastTestAt,
         string $lastTestError,
-        string $validationError
+        bool $validationError
     )
     {
         $this->enabled = $enabled;
