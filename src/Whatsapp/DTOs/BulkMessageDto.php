@@ -89,9 +89,38 @@ class BulkMessageDto
 
     private function __construct(array $data)
     {
-        foreach($data as $key => $value){
-            $this->{$key} = $value;
-        }
+        $this->numbers = $data['numbers'];
+        $this->type = $data['type'];
+        $this->folder = $data['folder'];
+        $this->delayMin = $data['delayMin'];
+        $this->delayMax = $data['delayMax'];
+        $this->scheduledFor = $data['scheduledFor'];
+        $this->info = $data['info'];
+        $this->delay = $data['delay'];
+        $this->mentions = $data['mentions'];
+        $this->text = $data['text'];
+        $this->linkPreview = $data['linkPreview'];
+        $this->linkPreviewTitle = $data['linkPreviewTitle'];
+        $this->linkPreviewDescription = $data['linkPreviewDescription'];
+        $this->linkPreviewImage = $data['linkPreviewImage'];
+        $this->linkPreviewLarge = $data['linkPreviewLarge'];
+        $this->file = $data['file'];
+        $this->docName = $data['docName'];
+        $this->fullName = $data['fullName'];
+        $this->phoneNumber = $data['phoneNumber'];
+        $this->organization = $data['organization'];
+        $this->email = $data['email'];
+        $this->url = $data['url'];
+        $this->latitude = $data['latitude'];
+        $this->longitude = $data['longitude'];
+        $this->name = $data['name'];
+        $this->address = $data['address'];
+        $this->footerText = $data['footerText'];
+        $this->buttonText = $data['buttonText'];
+        $this->listButton = $data['listButton'];
+        $this->selectableCount = $data['selectableCount'];
+        $this->choices = $data['choices'];
+        $this->imageButton = $data['imageButton'];
     }
 
     public static function generateText(

@@ -12,8 +12,10 @@ class BusinessProductsResponse
 
     public function __construct($data)
     {
-        foreach($data as $key => $value){
-            $this->{$key} = $value;
-        }
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->price = $data['price'];
+        $this->currency = $data['currency'];
     }
 }

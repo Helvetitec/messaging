@@ -15,7 +15,7 @@ class UazapiBusiness extends UazapiInstanceEndpoint
      * Get the commercial profile of a certain JID.
      *
      * @param string $jid
-     * @return void
+     * @return BusinessProfileResponse
      */
     public function getProfile(string $jid): BusinessProfileResponse
     {
@@ -188,9 +188,9 @@ class UazapiBusiness extends UazapiInstanceEndpoint
      * Show the product inside the catalog
      *
      * @param string $id
-     * @return void
+     * @return boolean
      */
-    public function showProduct(string $id)
+    public function showProduct(string $id): bool
     {
         $url = $this->root().'business/catalog/show';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -215,9 +215,9 @@ class UazapiBusiness extends UazapiInstanceEndpoint
      * Hide the product inside the catalog.
      *
      * @param string $id
-     * @return void
+     * @return boolean
      */
-    public function hideProduct(string $id)
+    public function hideProduct(string $id): bool
     {
         $url = $this->root().'business/catalog/hide';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [

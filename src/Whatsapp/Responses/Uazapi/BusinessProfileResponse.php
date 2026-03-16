@@ -13,8 +13,11 @@ class BusinessProfileResponse
     
     public function __construct($data)
     {
-        foreach($data as $key => $value){
-            $this->{$key} = $value;
-        }
+        $this->tag = $data['tag'];
+        $this->description = $data['description'];
+        $this->address = $data['address'];
+        $this->email = $data['email'];
+        $this->websites = $data['websites'];
+        $this->categories = $data['categories'];
     }
 }
