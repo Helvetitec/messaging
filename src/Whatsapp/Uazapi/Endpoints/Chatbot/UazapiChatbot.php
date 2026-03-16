@@ -293,7 +293,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      * @param bool $active
      * @param string $title
      * @param mixed $content
-     * @return ChatbotAgentResponse
+     * @return ChatbotKnowledgeResponse
      */
     public function createKnowledgebase(bool $active, string $title, mixed $content): ChatbotKnowledgeResponse
     {
@@ -328,7 +328,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      * @param bool $active
      * @param string $title
      * @param mixed $content
-     * @return ChatbotAgentResponse
+     * @return ChatbotKnowledgeResponse
      */
     public function editKnowledgebase(string $id, bool $active, string $title, mixed $content): ChatbotKnowledgeResponse
     {
