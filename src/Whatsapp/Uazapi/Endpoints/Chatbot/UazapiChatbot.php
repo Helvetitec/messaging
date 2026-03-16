@@ -7,6 +7,7 @@ use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotAgentDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotTriggerDto;
 use Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance;
 use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotAgentResponse;
+use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotKnowledgeResponse;
 use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotTriggerResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
@@ -284,24 +285,102 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return $agents;
     }
 
-    public function createKnowledgebase()
+    public function createKnowledgebase(bool $active, string $title, mixed $content): ChatbotKnowledgeResponse
     {
+        $url = $this->root().'knowledge/edit';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
+            'knowledge' => [
+                'active' => $active,
+                'title' => $title,
+                'content' => $content
+            ]
+        ]);
+        
+        if(!$response->successful()){
+            if($response->status() == 400){
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+            }elseif($response->status() == 404){
+                throw new Exception("[UAZAPI] Instance not found!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
 
+        return new ChatbotKnowledgeResponse($response->json());
     }
 
-    public function editKnowledgebase()
+    public function editKnowledgebase(string $id, bool $active, string $title, mixed $content): ChatbotKnowledgeResponse
     {
+        $url = $this->root().'knowledge/edit';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
+            'id' => $id,
+            'knowledge' => [
+                'active' => $active,
+                'title' => $title,
+                'content' => $content
+            ]
+        ]);
+        
+        if(!$response->successful()){
+            if($response->status() == 400){
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+            }elseif($response->status() == 404){
+                throw new Exception("[UAZAPI] Instance not found!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
 
+        return new ChatbotKnowledgeResponse($response->json());
     }
 
-    public function deleteKnowledgebase()
+    public function deleteKnowledgebase(string $id): bool
     {
+        $url = $this->root().'knowledge/edit';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
+            'id' => $id,
+            'delete' => true
+        ]);
+        
+        if(!$response->successful()){
+            if($response->status() == 400){
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+            }elseif($response->status() == 404){
+                throw new Exception("[UAZAPI] Instance not found!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
 
+        return true;
     }
 
     public function listKnowledgebase()
     {
+        $url = $this->root().'knowledge/list';
+        $response = Http::asJson()->withHeader('token', $this->token)->get($url);
+        
+        if(!$response->successful()){
+            if($response->status() == 401){
+                throw new Exception("[UAZAPI] No permissions!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
 
+        $knowledges = collect();
+        foreach($response->json() as $knowledge){
+            $knowledges->add(new ChatbotKnowledgeResponse($knowledge));
+        }
+        return $knowledges;
     }
 
     public function createFunction()
