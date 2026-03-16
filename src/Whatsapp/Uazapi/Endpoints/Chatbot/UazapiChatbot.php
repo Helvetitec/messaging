@@ -4,9 +4,11 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Chatbot;
 
 use Exception;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotAgentDto;
+use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotFunctionDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotTriggerDto;
 use Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance;
 use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotAgentResponse;
+use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotFunctionResponse;
 use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotKnowledgeResponse;
 use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotTriggerResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
@@ -383,23 +385,93 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return $knowledges;
     }
 
-    public function createFunction()
+    public function createFunction(ChatbotFunctionDto $functionData): ChatbotFunctionResponse
     {
+        $url = $this->root().'function/edit';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
+            'function' => $functionData->to()
+        ]);
+        
+        if(!$response->successful()){
+            if($response->status() == 400){
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+            }elseif($response->status() == 404){
+                throw new Exception("[UAZAPI] Instance not found!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
 
+        return new ChatbotFunctionResponse($response->json());
     }
 
-    public function editFunction()
+    public function editFunction(string $id, ChatbotFunctionDto $functionData): ChatbotFunctionResponse
     {
+        $url = $this->root().'function/edit';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
+            'id' => $id,
+            'function' => $functionData->to()
+        ]);
+        
+        if(!$response->successful()){
+            if($response->status() == 400){
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+            }elseif($response->status() == 404){
+                throw new Exception("[UAZAPI] Instance not found!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
 
+        return new ChatbotFunctionResponse($response->json());
     }
 
-    public function deleteFunction()
+    public function deleteFunction(string $id): bool
     {
+        $url = $this->root().'function/edit';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
+            'id' => $id,
+            'delete' => true
+        ]);
+        
+        if(!$response->successful()){
+            if($response->status() == 400){
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+            }elseif($response->status() == 404){
+                throw new Exception("[UAZAPI] Instance not found!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
 
+        return true;
     }
 
     public function listFunction()
     {
+        $url = $this->root().'function/list';
+        $response = Http::asJson()->withHeader('token', $this->token)->get($url);
+        
+        if(!$response->successful()){
+            if($response->status() == 401){
+                throw new Exception("[UAZAPI] No permissions!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
 
+        $functions = collect();
+        foreach($response->json() as $function){
+            $functions->add(new ChatbotFunctionResponse($function));
+        }
+        return $functions;
     }
 }
