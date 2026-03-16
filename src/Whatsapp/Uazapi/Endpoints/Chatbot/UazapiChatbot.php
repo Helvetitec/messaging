@@ -287,6 +287,14 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return $agents;
     }
 
+    /**
+     * Create knowledge.
+     *
+     * @param bool $active
+     * @param string $title
+     * @param mixed $content
+     * @return ChatbotAgentResponse
+     */
     public function createKnowledgebase(bool $active, string $title, mixed $content): ChatbotKnowledgeResponse
     {
         $url = $this->root().'knowledge/edit';
@@ -313,6 +321,15 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return new ChatbotKnowledgeResponse($response->json());
     }
 
+    /**
+     * Edit knowledge with id.
+     *
+     * @param string $id
+     * @param bool $active
+     * @param string $title
+     * @param mixed $content
+     * @return ChatbotAgentResponse
+     */
     public function editKnowledgebase(string $id, bool $active, string $title, mixed $content): ChatbotKnowledgeResponse
     {
         $url = $this->root().'knowledge/edit';
@@ -340,6 +357,12 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return new ChatbotKnowledgeResponse($response->json());
     }
 
+    /**
+     * Delete knowledge with id.
+     *
+     * @param string $id
+     * @return boolean
+     */
     public function deleteKnowledgebase(string $id): bool
     {
         $url = $this->root().'knowledge/edit';
@@ -363,6 +386,11 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return true;
     }
 
+    /**
+     * List all knowledge as a collection of ChatbotKnowledgeResponse.
+     *
+     * @return Collection
+     */
     public function listKnowledgebase()
     {
         $url = $this->root().'knowledge/list';
@@ -385,6 +413,12 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return $knowledges;
     }
 
+    /**
+     * Create function with id from ChatbotFunctionDto data.
+     *
+     * @param ChatbotFunctionDto $functionData
+     * @return ChatbotFunctionResponse
+     */
     public function createFunction(ChatbotFunctionDto $functionData): ChatbotFunctionResponse
     {
         $url = $this->root().'function/edit';
@@ -407,6 +441,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return new ChatbotFunctionResponse($response->json());
     }
 
+    /**
+     * Edit function with id from ChatbotFunctionDto data.
+     *
+     * @param string $id
+     * @param ChatbotFunctionDto $functionData
+     * @return ChatbotFunctionResponse
+     */
     public function editFunction(string $id, ChatbotFunctionDto $functionData): ChatbotFunctionResponse
     {
         $url = $this->root().'function/edit';
@@ -430,6 +471,12 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return new ChatbotFunctionResponse($response->json());
     }
 
+    /**
+     * Delete function with id.
+     *
+     * @param string $id
+     * @return boolean
+     */
     public function deleteFunction(string $id): bool
     {
         $url = $this->root().'function/edit';
@@ -453,6 +500,11 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         return true;
     }
 
+    /**
+     * List all functions as a collection of ChatbotFunctionResponse.
+     *
+     * @return Collection
+     */
     public function listFunction()
     {
         $url = $this->root().'function/list';
