@@ -31,7 +31,7 @@ class UazapiChats extends UazapiInstanceEndpoint
         if(!$response->successful()){
             if($response->status() == 400){
                 throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
-            }elseif($response->status() == 400){
+            }elseif($response->status() == 401){
                 throw new Exception("[UAZAPI] Invalid token!");
             }elseif($response->status() == 404){
                 throw new Exception("[UAZAPI] Instance not found!");
