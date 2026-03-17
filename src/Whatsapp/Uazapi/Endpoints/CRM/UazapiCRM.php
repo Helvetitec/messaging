@@ -97,13 +97,13 @@ class UazapiCRM extends UazapiInstanceEndpoint
     }
 
     /**
-     * Edit all lead informations
+     * Edit all lead informations and returns an array of the response.
      * 
-     * @todo Return all the lead informations
+     * @todo Return all the lead informations with CRMLeadResponse or such
      * @param CRMLeadDto $leadData
-     * @return true
+     * @return array
      */
-    public function editLeadInformations(CRMLeadDto $leadData): true
+    public function editLeadInformations(CRMLeadDto $leadData): array
     {
         $url = $this->root().'chat/editLead';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, $leadData->to());
@@ -119,6 +119,6 @@ class UazapiCRM extends UazapiInstanceEndpoint
             }
         }
 
-        return true;
+        return $response->json();
     }
 }

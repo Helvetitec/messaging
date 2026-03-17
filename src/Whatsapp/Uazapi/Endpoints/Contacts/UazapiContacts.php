@@ -142,12 +142,11 @@ class UazapiContacts extends UazapiInstanceEndpoint
     }
 
     /**
-     * Returns the full chat informations with a number.
-     * **NOT IMPLEMENTED**
-     * @todo Add funcionality
+     * Returns the full chat informations with a number, returns array of the response at the moment.
+     * @todo Add correct return format
      * @param string $number
      * @param boolean $preview
-     * @return void
+     * @return array
      */
     public function get(string $number, bool $preview)
     {
@@ -169,7 +168,7 @@ class UazapiContacts extends UazapiInstanceEndpoint
             }
         }
 
-        throw new NotImplementedException();
+        return $response->json();
     }
 
     /**

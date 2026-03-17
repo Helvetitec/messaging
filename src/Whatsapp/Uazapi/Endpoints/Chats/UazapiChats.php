@@ -154,12 +154,11 @@ class UazapiChats extends UazapiInstanceEndpoint
     }
 
     /**
-     * Search the chats with a certain body.
-     * **NOT IMPLEMENTED**
+     * Search the chats with a certain body and returns an array of the response.
      *
-     * @todo Implement functionality
+     * @todo Implement better response, not only array
      * @param array $body
-     * @throws NotImplementedException
+     * @return array
      */
     public function search(array $body)
     {
@@ -180,6 +179,6 @@ class UazapiChats extends UazapiInstanceEndpoint
             }
         }
 
-        throw new NotImplementedException();
+        return $response->json();
     }
 }
