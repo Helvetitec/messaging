@@ -12,6 +12,12 @@ use Helvetitec\Messaging\Enums\Uazapi\WebhookMessage;
 
 class UazapiWebhooks extends UazapiInstanceEndpoint
 {
+    /**
+     * Returns a collection of WebhookResponse. Normally this will return exactly one webhook, but if setAdvanced was used
+     * there can be more than one.
+     *
+     * @return Collection
+     */
     public function list(): Collection
     {
         $url = $this->root().'webhook';
@@ -33,7 +39,18 @@ class UazapiWebhooks extends UazapiInstanceEndpoint
         return $webhooks;
     }
 
-    public function set(bool $enabled, string $webhookUrl, array $events, array $excludeMessages)
+    /**
+     * Sets the configuration of the default webhook. The array of events should be WebhookEvent objects or string,
+     * the array of excludeMessage should be WebhookMessage or string. If you have more than one webhook, 
+     * use the setAdvanced method.
+     *
+     * @param boolean $enabled
+     * @param string $webhookUrl
+     * @param array $events
+     * @param array $excludeMessages
+     * @return WebhookResponse
+     */
+    public function set(bool $enabled, string $webhookUrl, array $events, array $excludeMessages): WebhookResponse
     {
         $convertedEvents = [];
         $convertedExcludeMessages = [];
