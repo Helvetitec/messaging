@@ -3,6 +3,7 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\CRM;
 
 use Exception;
+use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\CRMLeadDto;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Facades\Http;
 use Nette\NotImplementedException;
@@ -96,13 +97,28 @@ class UazapiCRM extends UazapiInstanceEndpoint
     }
 
     /**
-     * Edit informations of the lead.
-     * **NOT IMPLEMENTED**
-     * @todo Add functionality
-     * @return void
+     * Edit all lead informations
+     * 
+     * @todo Return all the lead informations
+     * @param CRMLeadDto $leadData
+     * @return true
      */
-    public function editLeadInformations()
+    public function editLeadInformations(CRMLeadDto $leadData): true
     {
-        throw new NotImplementedException();
+        $url = $this->root().'chat/editLead';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url, $leadData->to());
+        if(!$response->successful()){
+            if($response->status() == 400){
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+            }elseif($response->status() == 404){
+                throw new Exception("[UAZAPI] Instance not found!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
+
+        return true;
     }
 }
