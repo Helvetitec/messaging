@@ -2,7 +2,7 @@
 
 namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
 
-final class GlobalWebhookResponse
+final class WebhookResponse
 {
     public readonly int $id;
     public readonly bool $enabled;
