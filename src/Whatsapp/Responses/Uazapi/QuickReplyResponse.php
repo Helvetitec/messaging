@@ -2,7 +2,7 @@
 
 namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
 
-class QuickMessageResponse
+class QuickReplyResponse
 {
     public readonly string $id;
     public readonly bool $onWhatsApp;

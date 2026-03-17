@@ -2,7 +2,7 @@
 
 namespace Helvetitec\Messaging\Enums\Uazapi;
 
-enum QuickMessageType: string
+enum QuickReplyType: string
 {
     case TEXT = 'text';
     case AUDIO = 'audio';

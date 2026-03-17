@@ -1,32 +1,32 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\QuickMessages;
+namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\QuickReplys;
 
 use Exception;
-use Helvetitec\Messaging\Enums\Uazapi\QuickMessageType;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\QuickMessageResponse;
+use Helvetitec\Messaging\Enums\Uazapi\QuickReplyType;
+use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\QuickReplyResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
-class UazapiQuickMessages extends UazapiInstanceEndpoint
+class UazapiQuickReplies extends UazapiInstanceEndpoint
 {
     /**
-     * Adds a new QuickMessage and returns a QuickMessageResponse with its details
+     * Adds a new QuickReply and returns a QuickReplyResponse with its details
      *
      * @param string $shortCut
-     * @param QuickMessageType $type
+     * @param QuickReplyType $type
      * @param string|null $text
      * @param string|null $file
      * @param string|null $docName
-     * @return QuickMessageResponse
+     * @return QuickReplyResponse
      */
-    public function add(string $shortCut, QuickMessageType $type, ?string $text = null, ?string $file = null, ?string $docName = null): QuickMessageResponse
+    public function add(string $shortCut, QuickReplyType $type, ?string $text = null, ?string $file = null, ?string $docName = null): QuickReplyResponse
     {
-        if($type == QuickMessageType::TEXT && empty($text)){
-            throw new Exception('QuickMessage of type QuickMessageType::TEXT need to contain the $text parameter');
-        }elseif($type != QuickMessageType::TEXT && empty($file)){
-            throw new Exception('QuickMessage not of type QuickMessageType::TEXT need to contain the $file parameter');
+        if($type == QuickReplyType::TEXT && empty($text)){
+            throw new Exception('QuickReply of type QuickReplyType::TEXT need to contain the $text parameter');
+        }elseif($type != QuickReplyType::TEXT && empty($file)){
+            throw new Exception('QuickReply not of type QuickReplyType::TEXT need to contain the $file parameter');
         }
 
         $url = $this->root().'quickreply/edit';
@@ -54,26 +54,26 @@ class UazapiQuickMessages extends UazapiInstanceEndpoint
             }
         }
 
-        return new QuickMessageResponse($response->json('quickReplies')[0] ?? []);
+        return new QuickReplyResponse($response->json('quickReplies')[0] ?? []);
     }
 
     /**
-     * Updates a QuickMessage and returns a QuickMessageResponse with its updated data, but can't update the ones made in Whatsapp.
+     * Updates a QuickReply and returns a QuickReplyResponse with its updated data, but can't update the ones made in Whatsapp.
      *
      * @param string $id
      * @param string $shortCut
-     * @param QuickMessageType $type
+     * @param QuickReplyType $type
      * @param string|null $text
      * @param string|null $file
      * @param string|null $docName
-     * @return QuickMessageResponse
+     * @return QuickReplyResponse
      */
-    public function update(string $id, string $shortCut, QuickMessageType $type, ?string $text = null, ?string $file = null, ?string $docName = null): QuickMessageResponse
+    public function update(string $id, string $shortCut, QuickReplyType $type, ?string $text = null, ?string $file = null, ?string $docName = null): QuickReplyResponse
     {
-        if($type == QuickMessageType::TEXT && empty($text)){
-            throw new Exception('QuickMessage of type QuickMessageType::TEXT need to contain the $text parameter');
-        }elseif($type != QuickMessageType::TEXT && empty($file)){
-            throw new Exception('QuickMessage not of type QuickMessageType::TEXT need to contain the $file parameter');
+        if($type == QuickReplyType::TEXT && empty($text)){
+            throw new Exception('QuickReply of type QuickReplyType::TEXT need to contain the $text parameter');
+        }elseif($type != QuickReplyType::TEXT && empty($file)){
+            throw new Exception('QuickReply not of type QuickReplyType::TEXT need to contain the $file parameter');
         }
 
         $url = $this->root().'quickreply/edit';
@@ -102,11 +102,11 @@ class UazapiQuickMessages extends UazapiInstanceEndpoint
             }
         }
 
-        return new QuickMessageResponse($response->json('quickReplies')[0] ?? []);
+        return new QuickReplyResponse($response->json('quickReplies')[0] ?? []);
     }
 
     /**
-     * Deletes a QuickMessage, but can't delete the ones made in Whatsapp.
+     * Deletes a QuickReply, but can't delete the ones made in Whatsapp.
      *
      * @param string $id
      * @return true
@@ -139,7 +139,7 @@ class UazapiQuickMessages extends UazapiInstanceEndpoint
     }
 
     /**
-     * Lists all QuickMessages and returns them as a collection of QuickMessageResponse.
+     * Lists all QuickReplys and returns them as a collection of QuickReplyResponse.
      *
      * @return Collection
      */
@@ -154,10 +154,10 @@ class UazapiQuickMessages extends UazapiInstanceEndpoint
             throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
         }
 
-        $quickMessages = collect();
-        foreach($response->json() as $quickMessage){
-            $quickMessages->add(new QuickMessageResponse($quickMessage));
+        $QuickReplys = collect();
+        foreach($response->json() as $QuickReply){
+            $QuickReplys->add(new QuickReplyResponse($QuickReply));
         }
-        return $quickMessages;
+        return $QuickReplys;
     }
 }
