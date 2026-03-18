@@ -6,11 +6,11 @@ use Exception;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotAgentDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotFunctionDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotTriggerDto;
-use Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatbotAgentData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatbotFunctionData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatbotKnowledgeData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatbotTriggerData;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\InstanceData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -26,7 +26,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      * @param string $stopConversation Command to stop the chatbot
      * @param integer $stopMinutes Minutes the chatbot will be stopped
      * @param integer $stopWhenYouSendMsg Should the chatbot stop when you send a message?
-     * @return UazapiInstance
+     * @return InstanceData
      */
     public function config(
         string $openaiKey, 
@@ -35,7 +35,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         string $stopConversation, 
         int $stopMinutes, 
         int $stopWhenYouSendMsg
-    ): UazapiInstance
+    ): InstanceData
     {
         $url = $this->root().'instance/updatechatbotsettings';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -58,7 +58,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new UazapiInstance($response->json());
+        return new InstanceData($response->json());
     }
 
     /**

@@ -3,8 +3,7 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Admin;
 
 use Exception;
-use Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance;
-use Helvetitec\Messaging\Whatsapp\Responses\CreateInstanceResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\InstanceData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\WebhookData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiAdminEndpoint;
 use Illuminate\Support\Collection;
@@ -13,7 +12,7 @@ use Illuminate\Support\Facades\Http;
 final class UazapiAdmin extends UazapiAdminEndpoint
 {
     /**
-     * Creates an instance and returns its token and qrcode if possible
+     * Creates an instance and returns its Instance data
      *
      * @param string $name
      * @param string $systemName
@@ -21,7 +20,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      * @param string $browser
      * @param string|null $adminField01
      * @param string|null $adminField02
-     * @return CreateInstanceResponse
+     * @return InstanceData
      */
     public function createInstance(
         string $name, 
@@ -30,7 +29,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         string $browser = "chrome", 
         ?string $adminField01 = null, 
         ?string $adminField02 = null
-    ) : CreateInstanceResponse
+    ) : InstanceData
     {
         $url = $this->root().'instance/init';
         $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url, [
@@ -54,24 +53,11 @@ final class UazapiAdmin extends UazapiAdminEndpoint
             }
         }
 
-        $token = (string)$response->json('token', null);
-        $instance = (array)$response->json('instance', []);
-        $qrcode = $instance['qrcode'] ?? null;
-        $paircode = $instance['paircode'] ?? null;
-        if(is_null($token)){
-            throw new Exception("[UAZAPI] Invalid token for instance {$name}!");
-        }
-
-        return new CreateInstanceResponse(
-            token: $token,
-            qrcode: $qrcode,
-            paircode: $paircode,
-            instance: new UazapiInstance($instance)
-        );
+        return new InstanceData($response->json('instance'));
     }
 
     /**
-     * Returns a collection of Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance objects created.
+     * Returns a collection of InstanceData objects created.
      *
      * @return Collection
      */
@@ -95,21 +81,21 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         $instances = collect();
         foreach($instancesData as $instanceData)
         {
-            $instances->add(new UazapiInstance($instanceData));
+            $instances->add(new InstanceData($instanceData));
         }
 
         return $instances;
     }
 
     /**
-     * Updates the AdminField01 and AdminField02 from the instance where necessary and returns updated UazapiInstance.
+     * Updates the AdminField01 and AdminField02 from the instance where necessary and returns updated InstanceData.
      *
      * @param string $instanceId
      * @param string|null $adminField01
      * @param string|null $adminField02
-     * @return UazapiInstance
+     * @return InstanceData
      */
-    public function updateAdminFields(string $instanceId, ?string $adminField01 = null, ?string $adminField02 = null): UazapiInstance
+    public function updateAdminFields(string $instanceId, ?string $adminField01 = null, ?string $adminField02 = null): InstanceData
     {
         $url = $this->root().'instance/init';
         $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url, [
@@ -130,7 +116,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
             }
         }
 
-        return new UazapiInstance($response->json());
+        return new InstanceData($response->json());
     }
 
     /**

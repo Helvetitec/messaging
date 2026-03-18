@@ -4,9 +4,8 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Instance;
 
 use Exception;
 use Helvetitec\Messaging\Enums\WhatsappPresence;
-use Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance as UazapiInstanceObject;
-use Helvetitec\Messaging\Whatsapp\Responses\ConnectInstanceResponse;
-use Helvetitec\Messaging\Whatsapp\Responses\InstanceStatusResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\InstanceData;
+use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\InstanceStatusResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Facades\Http;
 use Nette\NotImplementedException;
@@ -17,9 +16,9 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      * Connects the instance to Whatsapp. If $phone is not null, it will fetch a pairing code.
      *
      * @param string|null $phone
-     * @return ConnectInstanceResponse
+     * @return InstanceData
      */
-    public function connect(?string $phone = null): ConnectInstanceResponse
+    public function connect(?string $phone = null): InstanceData
     {
         $requestArray = [];
         if(!empty($phone)){
@@ -41,25 +40,15 @@ final class UazapiInstance extends UazapiInstanceEndpoint
             }
         }
 
-        $connected = $response->json('connected');
-        $loggedIn = $response->json('loggedIn');
-        $jid = $response->json('jid');
-        $instance = new UazapiInstanceObject($response->json('instance'));
-
-        return new ConnectInstanceResponse(
-            connected: $connected,
-            loggedIn: $loggedIn,
-            jid: $jid,
-            instance: $instance
-        );
+        return new InstanceData($response->json('instance'));
     }
 
     /**
      * Disconnects the instance from Whatsapp. A reconnect is necessary after this point.
      *
-     * @return UazapiInstanceObject
+     * @return InstanceData
      */
-    public function disconnect(): UazapiInstanceObject
+    public function disconnect(): InstanceData
     {
         $url = $this->root().'instance/disconnect';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url);
@@ -74,7 +63,7 @@ final class UazapiInstance extends UazapiInstanceEndpoint
                 throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
-        return new UazapiInstanceObject($response->json('instance'));
+        return new InstanceData($response->json('instance'));
     }
 
     /**
@@ -98,16 +87,12 @@ final class UazapiInstance extends UazapiInstanceEndpoint
             }
         }
 
-        $instance = new UazapiInstanceObject($response->json('instance'));
-        $connected = $response->json('status')['connected'] ?? null;
-        $loggedIn = $response->json('status')['loggedIn'] ?? null;
-        $jid = $response->json('status')['jid'] ?? null;
+        $instance = new InstanceData($response->json('instance'));
+        $status = $response->json('status');
 
         return new InstanceStatusResponse(
             instance: $instance,
-            connected: $connected,
-            loggedIn: $loggedIn,
-            jid: $jid
+            status: $status
         );
     }
 
@@ -115,9 +100,9 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      * Updates the name of the instance
      *
      * @param string $newName
-     * @return UazapiInstanceObject
+     * @return InstanceData
      */
-    public function updateName(string $newName): UazapiInstanceObject
+    public function updateName(string $newName): InstanceData
     {
         $url = $this->root().'instance/updateInstanceName';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url,[
@@ -134,7 +119,7 @@ final class UazapiInstance extends UazapiInstanceEndpoint
                 throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
-        return new UazapiInstanceObject($response->json());
+        return new InstanceData($response->json());
     }
 
     /**
@@ -214,9 +199,9 @@ final class UazapiInstance extends UazapiInstanceEndpoint
      *
      * @param integer $minDelay
      * @param integer $maxDelay
-     * @return UazapiInstanceObject
+     * @return InstanceData
      */
-    public function setMessageDelay(int $minDelay, int $maxDelay): UazapiInstanceObject
+    public function setMessageDelay(int $minDelay, int $maxDelay): InstanceData
     {
         $url = $this->root().'instance/updateDelaySettings';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url,[
@@ -234,6 +219,6 @@ final class UazapiInstance extends UazapiInstanceEndpoint
                 throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
-        return new UazapiInstanceObject($response->json('instance'));
+        return new InstanceData($response->json('instance'));
     }
 }
