@@ -3,18 +3,18 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Proxy;
 
 use Exception;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ProxyResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ProxyData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Facades\Http;
 
 class UazapiProxy extends UazapiInstanceEndpoint
 {
     /**
-     * Returns a ProxyResponse object with the current configurations.
+     * Returns a ProxyData object with the current configurations.
      *
-     * @return ProxyResponse
+     * @return ProxyData
      */
-    public function getProxyConfigurations(): ProxyResponse
+    public function getProxyConfigurations(): ProxyData
     {
         $url = $this->root().'instance/proxy';
         $response = Http::asJson()->withHeader('token', $this->token)->get($url);
@@ -34,7 +34,7 @@ class UazapiProxy extends UazapiInstanceEndpoint
         $lastTestError = $response->json('last_test_error');
         $validationError = $response->json('validation_error');
 
-        return new ProxyResponse(
+        return new ProxyData(
             enabled: $enabled,
             proxyUrl: $proxyUrl,
             lastTestAt: $lastTestAt,
@@ -44,13 +44,13 @@ class UazapiProxy extends UazapiInstanceEndpoint
     }
 
     /**
-     * Updates the proxy configurations and returns the updated configurations as ProxyResponse.
+     * Updates the proxy configurations and returns the updated configurations as ProxyData.
      *
      * @param boolean $enable
      * @param string $proxyUrl
-     * @return ProxyResponse
+     * @return ProxyData
      */
-    public function setProxyConfigurations(bool $enable, string $proxyUrl): ProxyResponse
+    public function setProxyConfigurations(bool $enable, string $proxyUrl): ProxyData
     {
         $url = $this->root().'instance/proxy';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url,[
@@ -76,7 +76,7 @@ class UazapiProxy extends UazapiInstanceEndpoint
         $lastTestError = $proxy['last_test_error'];
         $validationError = $proxy['validation_error'];
         
-        return new ProxyResponse(
+        return new ProxyData(
             enabled: $enabled,
             proxyUrl: $proxyUrl,
             lastTestAt: $lastTestAt,

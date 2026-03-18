@@ -1,8 +1,8 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
+namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
-class NumberVerifyResponse
+class NumberVerifyData
 {
     public readonly string $query;
     public readonly string $jid;

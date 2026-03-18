@@ -3,8 +3,8 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Contacts;
 
 use Exception;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ContactResponse;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\NumberVerifyResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ContactData;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\NumberVerifyData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -33,7 +33,7 @@ class UazapiContacts extends UazapiInstanceEndpoint
 
         $contacts = collect();
         foreach($response->json() as $contact){
-            $contacts->add(new ContactResponse($contact));
+            $contacts->add(new ContactData($contact));
         }
         return $contacts;
     }
@@ -74,7 +74,7 @@ class UazapiContacts extends UazapiInstanceEndpoint
 
         $contacts = collect();
         foreach($response->json('contacts') as $contact){
-            $contacts->add(new ContactResponse($contact));
+            $contacts->add(new ContactData($contact));
         }
         
         return [
@@ -84,13 +84,13 @@ class UazapiContacts extends UazapiInstanceEndpoint
     }
 
     /**
-     * Add a contact to Whatsapp with the following phone and name and return a ContactResponse
+     * Add a contact to Whatsapp with the following phone and name and return a ContactData
      *
      * @param string $phone
      * @param string $name
-     * @return ContactResponse
+     * @return ContactData
      */
-    public function add(string $phone, string $name): ContactResponse
+    public function add(string $phone, string $name): ContactData
     {
         $url = $this->root().'contact/add';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -110,7 +110,7 @@ class UazapiContacts extends UazapiInstanceEndpoint
             }
         }
 
-        return new ContactResponse($response->json('contact'));
+        return new ContactData($response->json('contact'));
     }
 
     /**
@@ -172,7 +172,7 @@ class UazapiContacts extends UazapiInstanceEndpoint
     }
 
     /**
-     * Verifies an array of numbers and returns a collection of NumberVerifyResponse objects.
+     * Verifies an array of numbers and returns a collection of NumberVerifyData objects.
      *
      * @param array $numbers
      * @return Collection
@@ -199,7 +199,7 @@ class UazapiContacts extends UazapiInstanceEndpoint
         $verifiedNumbers = collect();
         foreach($response->json() as $verifiedNumber)
         {
-            $verifiedNumbers->add(new NumberVerifyResponse($verifiedNumber));
+            $verifiedNumbers->add(new NumberVerifyData($verifiedNumber));
         }
         return $verifiedNumbers;
     }

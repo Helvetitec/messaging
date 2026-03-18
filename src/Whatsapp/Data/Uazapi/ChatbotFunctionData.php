@@ -1,8 +1,8 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
+namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
-class ChatbotFunctionResponse
+class ChatbotFunctionData
 {
     public readonly string $id;
     public readonly string $name;

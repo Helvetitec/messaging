@@ -3,7 +3,7 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Webhooks;
 
 use Exception;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\WebhookResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\WebhookData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -13,7 +13,7 @@ use Helvetitec\Messaging\Enums\Uazapi\WebhookMessage;
 class UazapiWebhooks extends UazapiInstanceEndpoint
 {
     /**
-     * Returns a collection of WebhookResponse. Normally this will return exactly one webhook, but if setAdvanced was used
+     * Returns a collection of WebhookData. Normally this will return exactly one webhook, but if setAdvanced was used
      * there can be more than one.
      *
      * @return Collection
@@ -34,7 +34,7 @@ class UazapiWebhooks extends UazapiInstanceEndpoint
 
         $webhooks = collect();
         foreach($response->json() as $webhook){
-            $webhooks->add(new WebhookResponse($webhook));
+            $webhooks->add(new WebhookData($webhook));
         }
         return $webhooks;
     }
@@ -48,9 +48,9 @@ class UazapiWebhooks extends UazapiInstanceEndpoint
      * @param string $webhookUrl
      * @param array $events
      * @param array $excludeMessages
-     * @return WebhookResponse
+     * @return WebhookData
      */
-    public function set(bool $enabled, string $webhookUrl, array $events, array $excludeMessages): WebhookResponse
+    public function set(bool $enabled, string $webhookUrl, array $events, array $excludeMessages): WebhookData
     {
         $convertedEvents = [];
         $convertedExcludeMessages = [];
@@ -80,7 +80,7 @@ class UazapiWebhooks extends UazapiInstanceEndpoint
             }
         }
 
-        return new WebhookResponse($response->json()[0]);
+        return new WebhookData($response->json()[0]);
     }
 
     public function setAdvanced(array $request)
@@ -99,6 +99,6 @@ class UazapiWebhooks extends UazapiInstanceEndpoint
             }
         }
 
-        return new WebhookResponse($response->json()[0]);
+        return new WebhookData($response->json()[0]);
     }
 }

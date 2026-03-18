@@ -1,8 +1,8 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
+namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
-class ProxyResponse
+class ProxyData
 {
     public readonly bool $enabled;
     public readonly string $proxyUrl;

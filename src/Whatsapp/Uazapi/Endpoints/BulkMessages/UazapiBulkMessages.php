@@ -6,7 +6,7 @@ use Exception;
 use Helvetitec\Messaging\Enums\BulkMessageAction;
 use Helvetitec\Messaging\Enums\BulkMessageStatus;
 use Helvetitec\Messaging\Whatsapp\DTOs\BulkMessageDto;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\BulkMessageResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\BulkMessageData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -124,9 +124,9 @@ class UazapiBulkMessages extends UazapiInstanceEndpoint
      * Shows details about a BulkMessage with a certain folderId or returns null.
      *
      * @param string $folderId
-     * @return BulkMessageResponse|null
+     * @return BulkMessageData|null
      */
-    public function show(string $folderId): BulkMessageResponse|null
+    public function show(string $folderId): BulkMessageData|null
     {
         $bulkMessages = $this->list();
         return $bulkMessages->where('id', '=', $folderId)->first();
@@ -151,7 +151,7 @@ class UazapiBulkMessages extends UazapiInstanceEndpoint
         }
         $bulkMessages = collect();
         foreach($response->json() as $bulkMessage){
-            $bulkMessages->add(new BulkMessageResponse($bulkMessage));
+            $bulkMessages->add(new BulkMessageData($bulkMessage));
         }
         return $bulkMessages;
     }

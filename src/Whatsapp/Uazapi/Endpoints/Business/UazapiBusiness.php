@@ -3,8 +3,8 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Business;
 
 use Exception;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\BusinessProductsResponse;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\BusinessProfileResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\BusinessProductsData;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\BusinessProfileData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -15,9 +15,9 @@ class UazapiBusiness extends UazapiInstanceEndpoint
      * Get the commercial profile of a certain JID.
      *
      * @param string $jid
-     * @return BusinessProfileResponse
+     * @return BusinessProfileData
      */
-    public function getProfile(string $jid): BusinessProfileResponse
+    public function getProfile(string $jid): BusinessProfileData
     {
         $url = $this->root().'business/get/profile';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -35,7 +35,7 @@ class UazapiBusiness extends UazapiInstanceEndpoint
             }
         }
         $responseArr = $response->json('response');
-        return new BusinessProfileResponse([
+        return new BusinessProfileData([
             $responseArr['tag'],
             $responseArr['description'],
             $responseArr['address'],
@@ -123,19 +123,19 @@ class UazapiBusiness extends UazapiInstanceEndpoint
         $responseArr = $response->json('response');
         $products = collect();
         foreach($responseArr as $product){
-            $products->add(new BusinessProductsResponse($product));
+            $products->add(new BusinessProductsData($product));
         }
         return $products;
     }
 
     /**
-     * Get a specific product per Id and Jid as BusinessProductsResponse.
+     * Get a specific product per Id and Jid as BusinessProductsData.
      *
      * @param string $jid
      * @param string $id
-     * @return BusinessProductsResponse
+     * @return BusinessProductsData
      */
-    public function getProduct(string $jid, string $id): BusinessProductsResponse
+    public function getProduct(string $jid, string $id): BusinessProductsData
     {
         $url = $this->root().'business/catalog/info';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -154,7 +154,7 @@ class UazapiBusiness extends UazapiInstanceEndpoint
             }
         }
 
-        return new BusinessProductsResponse($response->json('response'));
+        return new BusinessProductsData($response->json('response'));
     }
 
     /**

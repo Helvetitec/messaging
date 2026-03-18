@@ -4,8 +4,8 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Admin;
 
 use Exception;
 use Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance;
-use Helvetitec\Messaging\Whatsapp\Responses\CreateInstanceResponse;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\WebhookResponse;
+use Helvetitec\Messaging\Whatsapp\Data\CreateInstanceResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\WebhookData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiAdminEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -136,9 +136,9 @@ final class UazapiAdmin extends UazapiAdminEndpoint
     /**
      * Returns the informations of the Global Webhook
      *
-     * @return WebhookResponse
+     * @return WebhookData
      */
-    public function showGlobalWebhook(): WebhookResponse
+    public function showGlobalWebhook(): WebhookData
     {
         $url = $this->root().'globalwebhook';
         $response = Http::withHeader('admintoken', $this->adminToken)->get($url);
@@ -155,7 +155,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
                 throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
-        return new WebhookResponse($response->json());
+        return new WebhookData($response->json());
     }
 
     /**
@@ -164,9 +164,9 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      * @param string $url
      * @param array $events
      * @param array $excludedMessages
-     * @return WebhookResponse
+     * @return WebhookData
      */
-    public function configGlobalWebhook(string $url, array $events, array $excludedMessages): WebhookResponse
+    public function configGlobalWebhook(string $url, array $events, array $excludedMessages): WebhookData
     {
         $url = $this->root().'globalwebhook';
         $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url, [
@@ -189,7 +189,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
                 throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
-        return new WebhookResponse($response->json());
+        return new WebhookData($response->json());
     }
 
     /**

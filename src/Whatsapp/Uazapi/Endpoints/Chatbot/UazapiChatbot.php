@@ -7,10 +7,10 @@ use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotAgentDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotFunctionDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotTriggerDto;
 use Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotAgentResponse;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotFunctionResponse;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotKnowledgeResponse;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatbotTriggerResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatbotAgentData;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatbotFunctionData;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatbotKnowledgeData;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatbotTriggerData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -65,9 +65,9 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      * Create trigger from ChtabotTriggerDto data.
      *
      * @param ChatbotTriggerDto $triggerData
-     * @return ChatbotTriggerResponse
+     * @return ChatbotTriggerData
      */
-    public function createTrigger(ChatbotTriggerDto $triggerData): ChatbotTriggerResponse
+    public function createTrigger(ChatbotTriggerDto $triggerData): ChatbotTriggerData
     {
         $url = $this->root().'trigger/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -86,7 +86,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new ChatbotTriggerResponse($response->json());
+        return new ChatbotTriggerData($response->json());
     }
 
     /**
@@ -94,9 +94,9 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      *
      * @param string $id
      * @param ChatbotTriggerDto $triggerData
-     * @return ChatbotTriggerResponse
+     * @return ChatbotTriggerData
      */
-    public function editTrigger(string $id, ChatbotTriggerDto $triggerData): ChatbotTriggerResponse
+    public function editTrigger(string $id, ChatbotTriggerDto $triggerData): ChatbotTriggerData
     {
         $url = $this->root().'trigger/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -116,7 +116,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new ChatbotTriggerResponse($response->json());
+        return new ChatbotTriggerData($response->json());
     }
 
     /**
@@ -148,7 +148,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
     }
 
     /**
-     * List all triggers as a collection of ChatbotTriggerResponse.
+     * List all triggers as a collection of ChatbotTriggerData.
      *
      * @return Collection
      */
@@ -169,7 +169,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
 
         $triggers = collect();
         foreach($response->json() as $trigger){
-            $triggers->add(new ChatbotTriggerResponse($trigger));
+            $triggers->add(new ChatbotTriggerData($trigger));
         }
         return $triggers;
     }
@@ -178,9 +178,9 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      * Create agent from ChtabotAgentDto data.
      *
      * @param ChatbotAgentDto $agentData
-     * @return ChatbotAgentResponse
+     * @return ChatbotAgentData
      */
-    public function createAgent(ChatbotAgentDto $agentData): ChatbotAgentResponse
+    public function createAgent(ChatbotAgentDto $agentData): ChatbotAgentData
     {
         $url = $this->root().'agent/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -199,7 +199,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new ChatbotAgentResponse($response->json());
+        return new ChatbotAgentData($response->json());
     }
 
     /**
@@ -207,9 +207,9 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      *
      * @param string $id
      * @param ChatbotAgentDto $agentData
-     * @return ChatbotAgentResponse
+     * @return ChatbotAgentData
      */
-    public function editAgent(string $id, ChatbotAgentDto $agentData): ChatbotAgentResponse
+    public function editAgent(string $id, ChatbotAgentDto $agentData): ChatbotAgentData
     {
         $url = $this->root().'agent/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -229,7 +229,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new ChatbotAgentResponse($response->json());
+        return new ChatbotAgentData($response->json());
     }
 
     /**
@@ -261,7 +261,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
     }
 
     /**
-     * List all agents as a collection of ChatbotAgentResponse.
+     * List all agents as a collection of ChatbotAgentData.
      *
      * @return Collection
      */
@@ -282,7 +282,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
 
         $agents = collect();
         foreach($response->json() as $agent){
-            $agents->add(new ChatbotAgentResponse($agent));
+            $agents->add(new ChatbotAgentData($agent));
         }
         return $agents;
     }
@@ -293,9 +293,9 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      * @param bool $active
      * @param string $title
      * @param mixed $content
-     * @return ChatbotKnowledgeResponse
+     * @return ChatbotKnowledgeData
      */
-    public function createKnowledgebase(bool $active, string $title, mixed $content): ChatbotKnowledgeResponse
+    public function createKnowledgebase(bool $active, string $title, mixed $content): ChatbotKnowledgeData
     {
         $url = $this->root().'knowledge/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -318,7 +318,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new ChatbotKnowledgeResponse($response->json());
+        return new ChatbotKnowledgeData($response->json());
     }
 
     /**
@@ -328,9 +328,9 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      * @param bool $active
      * @param string $title
      * @param mixed $content
-     * @return ChatbotKnowledgeResponse
+     * @return ChatbotKnowledgeData
      */
-    public function editKnowledgebase(string $id, bool $active, string $title, mixed $content): ChatbotKnowledgeResponse
+    public function editKnowledgebase(string $id, bool $active, string $title, mixed $content): ChatbotKnowledgeData
     {
         $url = $this->root().'knowledge/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -354,7 +354,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new ChatbotKnowledgeResponse($response->json());
+        return new ChatbotKnowledgeData($response->json());
     }
 
     /**
@@ -387,7 +387,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
     }
 
     /**
-     * List all knowledge as a collection of ChatbotKnowledgeResponse.
+     * List all knowledge as a collection of ChatbotKnowledgeData.
      *
      * @return Collection
      */
@@ -408,7 +408,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
 
         $knowledges = collect();
         foreach($response->json() as $knowledge){
-            $knowledges->add(new ChatbotKnowledgeResponse($knowledge));
+            $knowledges->add(new ChatbotKnowledgeData($knowledge));
         }
         return $knowledges;
     }
@@ -417,9 +417,9 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      * Create function with id from ChatbotFunctionDto data.
      *
      * @param ChatbotFunctionDto $functionData
-     * @return ChatbotFunctionResponse
+     * @return ChatbotFunctionData
      */
-    public function createFunction(ChatbotFunctionDto $functionData): ChatbotFunctionResponse
+    public function createFunction(ChatbotFunctionDto $functionData): ChatbotFunctionData
     {
         $url = $this->root().'function/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -438,7 +438,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new ChatbotFunctionResponse($response->json());
+        return new ChatbotFunctionData($response->json());
     }
 
     /**
@@ -446,9 +446,9 @@ class UazapiChatbot extends UazapiInstanceEndpoint
      *
      * @param string $id
      * @param ChatbotFunctionDto $functionData
-     * @return ChatbotFunctionResponse
+     * @return ChatbotFunctionData
      */
-    public function editFunction(string $id, ChatbotFunctionDto $functionData): ChatbotFunctionResponse
+    public function editFunction(string $id, ChatbotFunctionDto $functionData): ChatbotFunctionData
     {
         $url = $this->root().'function/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -468,7 +468,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
             }
         }
 
-        return new ChatbotFunctionResponse($response->json());
+        return new ChatbotFunctionData($response->json());
     }
 
     /**
@@ -501,7 +501,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
     }
 
     /**
-     * List all functions as a collection of ChatbotFunctionResponse.
+     * List all functions as a collection of ChatbotFunctionData.
      *
      * @return Collection
      */
@@ -522,7 +522,7 @@ class UazapiChatbot extends UazapiInstanceEndpoint
 
         $functions = collect();
         foreach($response->json() as $function){
-            $functions->add(new ChatbotFunctionResponse($function));
+            $functions->add(new ChatbotFunctionData($function));
         }
         return $functions;
     }

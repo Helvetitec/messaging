@@ -3,18 +3,18 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Chatwoot;
 
 use Exception;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\ChatwootResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatwootData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Facades\Http;
 
 class UazapiChatwoot extends UazapiInstanceEndpoint
 {
     /**
-     * Returns the chatwoot configurations as ChatwootResponse.
+     * Returns the chatwoot configurations as ChatwootData.
      *
-     * @return ChatwootResponse
+     * @return ChatwootData
      */
-    public function get(): ChatwootResponse
+    public function get(): ChatwootData
     {
         $url = $this->root().'chatwoot/config';
         $response = Http::asJson()->withHeader('token', $this->token)->get($url);
@@ -28,7 +28,7 @@ class UazapiChatwoot extends UazapiInstanceEndpoint
                 throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
-        return new ChatwootResponse($response->json());
+        return new ChatwootData($response->json());
     }
 
     /**

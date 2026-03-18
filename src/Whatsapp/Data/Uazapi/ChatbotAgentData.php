@@ -1,11 +1,11 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
+namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
 use Helvetitec\Messaging\Enums\Uazapi\ChatbotAgentProvider;
 use Helvetitec\Messaging\Enums\Uazapi\ChatbotAgentModel;
 
-class ChatbotAgentResponse
+class ChatbotAgentData
 {
     public readonly string $id;
     public readonly string $name;

@@ -24,8 +24,14 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendText(string $number, string $text, bool $linkPreview, MessageConfigDto $messageConfig): array
+    public function sendText(
+        string $number, 
+        string $text, 
+        bool $linkPreview, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'text' => $text,
@@ -62,7 +68,12 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendImage(string $number, string $file, string $caption, MessageConfigDto $messageConfig): array
+    public function sendImage(
+        string $number, 
+        string $file, 
+        string $caption, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
         return $this->sendMedia($number, MediaType::IMAGE, $file, $caption, null, $messageConfig);
     }
@@ -77,7 +88,12 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendVideo(string $number, string $file, string $caption, MessageConfigDto $messageConfig): array
+    public function sendVideo(
+        string $number, 
+        string $file, 
+        string $caption, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
         return $this->sendMedia($number, MediaType::VIDEO, $file, $caption, null, $messageConfig);
     }
@@ -91,7 +107,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendAudio(string $number, string $file, MessageConfigDto $messageConfig): array
+    public function sendAudio(
+        string $number, 
+        string $file, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
         return $this->sendMedia($number, MediaType::AUDIO, $file, null, null, $messageConfig);
     }
@@ -105,7 +125,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendMyAudio(string $number, string $file, MessageConfigDto $messageConfig): array
+    public function sendMyAudio(
+        string $number, 
+        string $file, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
         return $this->sendMedia($number, MediaType::MYAUDIO, $file, null, null, $messageConfig);
     }
@@ -119,7 +143,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendPtt(string $number, string $file, MessageConfigDto $messageConfig): array
+    public function sendPtt(
+        string $number, 
+        string $file, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
         return $this->sendMedia($number, MediaType::PTT, $file, null, null, $messageConfig);
     }
@@ -133,7 +161,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendPtv(string $number, string $file, MessageConfigDto $messageConfig): array
+    public function sendPtv(
+        string $number, 
+        string $file, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
         return $this->sendMedia($number, MediaType::PTV, $file, null, null, $messageConfig);
     }
@@ -147,7 +179,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendSticker(string $number, string $file, MessageConfigDto $messageConfig): array
+    public function sendSticker(
+        string $number, 
+        string $file, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
         return $this->sendMedia($number, MediaType::STICKER, $file, null, null, $messageConfig);
     }
@@ -163,7 +199,13 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendDocument(string $number, string $file, string $docName, string $caption, MessageConfigDto $messageConfig): array
+    public function sendDocument(
+        string $number, 
+        string $file, 
+        string $docName, 
+        string $caption, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
         return $this->sendMedia($number, MediaType::DOCUMENT, $file, $caption, $docName, $messageConfig);
     }
@@ -180,8 +222,16 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendMedia(string $number, MediaType $type, string $file, ?string $text = null, ?string $docName = null, MessageConfigDto $messageConfig): array
+    public function sendMedia(
+        string $number, 
+        MediaType $type, 
+        string $file, 
+        ?string $text = null, 
+        ?string $docName = null, 
+        ?MessageConfigDto $messageConfig = null
+    ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'type' => $type->value,
@@ -234,9 +284,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         string $organization, 
         string $email, 
         string $url, 
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'fullName' => $fullName,
@@ -283,9 +334,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         float $longitude, 
         ?string $name, 
         ?string $address, 
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'name' => $name,
@@ -322,7 +374,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param integer $durationInMs
      * @return true
      */
-    public function updatePresence(string $number, WhatsappPresence $presence, int $durationInMs): true
+    public function updatePresence(
+        string $number, 
+        WhatsappPresence $presence, 
+        int $durationInMs
+    ): true
     {
         $url = $this->root().'send/presence';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -364,9 +420,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         int $font, 
         ?string $text, 
         ?string $file, 
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'type' => $type->value,
             'text' => $text,
@@ -413,9 +470,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         array $choices, 
         ?string $footerText, 
         ?string $imageButton, 
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'type' => 'button',
@@ -459,9 +517,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         string $number, 
         string $text, 
         array $choices, 
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'type' => 'carousel',
@@ -504,9 +563,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         string $number, 
         string $text, 
         array $carousel, 
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'text' => $text,
@@ -543,10 +603,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param string|null $footerText
      * @param MessageConfigDto $messageConfig
      * @link https://docs.uazapi.com/endpoint/post/send~menu Documentation for how to set choices.
-     * @return void
+     * @return array
      */
-    public function sendList(string $number, string $text, array $choices, string $listButton, ?string $footerText, MessageConfigDto $messageConfig)
+    public function sendList(string $number, string $text, array $choices, string $listButton, ?string $footerText, ?MessageConfigDto $messageConfig = null): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'type' => 'list',
@@ -585,10 +646,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param integer $selectableCount
      * @param MessageConfigDto $messageConfig
      * @link https://docs.uazapi.com/endpoint/post/send~menu Documentation for how to set choices.
-     * @return void
+     * @return array
      */
-    public function sendPoll(string $number, string $text, array $choices, int $selectableCount, MessageConfigDto $messageConfig)
+    public function sendPoll(string $number, string $text, array $choices, int $selectableCount, ?MessageConfigDto $messageConfig = null): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'type' => 'poll',
@@ -636,9 +698,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         string $pixKey, 
         string $pixName,
         PixType $pixType, 
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'amount' => (float)$amount,
@@ -689,9 +752,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         string $additionalNote,
         string $fileUrl,
         string $fileName,
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'amount' => (float)$amount,
@@ -730,7 +794,7 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @throws NotImplementedException
      */
-    public function sendLinkPayment(string $number, MessageConfigDto $messageConfig)
+    public function sendLinkPayment(string $number, ?MessageConfigDto $messageConfig = null)
     {
         throw new NotImplementedException();
     }
@@ -762,9 +826,10 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         string $additionalNote,
         string $fileUrl,
         string $fileName,
-        MessageConfigDto $messageConfig
+        ?MessageConfigDto $messageConfig = null
     ): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'amount' => (float)$amount,
@@ -809,8 +874,9 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param MessageConfigDto $messageConfig
      * @return array
      */
-    public function sendPixButton(string $number, PixType $pixType, string $pixKey, ?string $pixName, MessageConfigDto $messageConfig): array
+    public function sendPixButton(string $number, PixType $pixType, string $pixKey, ?string $pixName, ?MessageConfigDto $messageConfig = null): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'pixType' => $pixType->value,
@@ -845,10 +911,11 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * @param string $number
      * @param string $text
      * @param MessageConfigDto $messageConfig
-     * @return void
+     * @return array
      */
-    public function requestLocation(string $number, string $text, MessageConfigDto $messageConfig)
+    public function requestLocation(string $number, string $text, ?MessageConfigDto $messageConfig = null): array
     {
+        $messageConfig ??= new MessageConfigDto();
         $data = array_merge([
             'number' => $number,
             'text' => $text,

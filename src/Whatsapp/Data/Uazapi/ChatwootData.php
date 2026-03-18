@@ -1,8 +1,8 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
+namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
-final class ChatwootResponse
+final class ChatwootData
 {
     public readonly bool $enabled;
     public readonly string $url;

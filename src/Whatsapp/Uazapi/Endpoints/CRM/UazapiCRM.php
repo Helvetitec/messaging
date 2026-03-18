@@ -54,10 +54,11 @@ class UazapiCRM extends UazapiInstanceEndpoint
      * Updates several custom CRM fields at once. The content inside the array should be [int, string] and have the same
      * rules than in updateCustomField.
      *
+     * @todo Return correct format
      * @param array $fields
-     * @return void
+     * @return array
      */
-    public function updateCustomFields(array $fields)
+    public function updateCustomFields(array $fields): array
     {
         $convertedFields = [];
         foreach($fields as $id => $content)

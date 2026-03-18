@@ -1,8 +1,8 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
+namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
-final class WebhookResponse
+final class WebhookData
 {
     public readonly int $id;
     public readonly bool $enabled;

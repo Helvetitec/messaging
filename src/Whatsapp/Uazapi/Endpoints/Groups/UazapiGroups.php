@@ -249,7 +249,7 @@ class UazapiGroups extends UazapiInstanceEndpoint
      * needs to be admin to do this action.
      *
      * @param string $groupJid
-     * @param boolean $annouce
+     * @param boolean $announce
      * @return boolean
      */
     public function configMessagePermissions(string $groupJid, bool $announce): bool
@@ -348,9 +348,9 @@ class UazapiGroups extends UazapiInstanceEndpoint
      *
      * @param string $groupJid
      * @param boolean $locked
-     * @return bool
+     * @return true
      */
-    public function configEditPermissions(string $groupJid, bool $locked): bool
+    public function configEditPermissions(string $groupJid, bool $locked): true
     {
         $url = $this->root().'group/updateLocked';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -417,9 +417,9 @@ class UazapiGroups extends UazapiInstanceEndpoint
      * @param string $groupJid
      * @param GroupParticipantAction $action
      * @param array $participants
-     * @return void
+     * @return true
      */
-    public function manageGroupContacts(string $groupJid, GroupParticipantAction $action, array $participants)
+    public function manageGroupContacts(string $groupJid, GroupParticipantAction $action, array $participants): true
     {
         $url = $this->root().'group/updateParticipants';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [

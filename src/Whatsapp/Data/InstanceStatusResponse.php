@@ -1,6 +1,6 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Responses;
+namespace Helvetitec\Messaging\Whatsapp\Data;
 
 use Helvetitec\Messaging\Whatsapp\Instances\WhatsappInstance;
 

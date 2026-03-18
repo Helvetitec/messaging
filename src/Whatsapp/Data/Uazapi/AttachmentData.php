@@ -1,8 +1,8 @@
 <?php
 
-namespace Helvetitec\Messaging\Whatsapp\Responses\Uazapi;
+namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
-class AttachmentResponse
+class AttachmentData
 {
     public readonly ?string $fileUrl;
     public readonly ?string $mimeType;

@@ -3,19 +3,19 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Messages;
 
 use Exception;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\AttachmentResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\AttachmentData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Facades\Http;
 
 class UazapiMessages extends UazapiInstanceEndpoint
 {
     /**
-     * Downloads an attachment and returns an AttachmentResponse object.
+     * Downloads an attachment and returns an AttachmentData object.
      *
      * @param string $messageId
-     * @return AttachmentResponse
+     * @return AttachmentData
      */
-    public function downloadAttachment(string $messageId): AttachmentResponse
+    public function downloadAttachment(string $messageId): AttachmentData
     {
         $url = $this->root().'message/download';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -38,18 +38,18 @@ class UazapiMessages extends UazapiInstanceEndpoint
             }
         }
 
-        return new AttachmentResponse($response->json());
+        return new AttachmentData($response->json());
     }
 
     /**
-     * Downloads an attachment and returns an AttachmentResponse object with additional configurations.
+     * Downloads an attachment and returns an AttachmentData object with additional configurations.
      *
      * @param string $messageId
      * @param array $configurations
      * @link https://docs.uazapi.com/endpoint/post/message~download Documentation for additional configurations.
-     * @return AttachmentResponse
+     * @return AttachmentData
      */
-    public function advancedDownloadAttachment(string $messageId, array $configurations): AttachmentResponse
+    public function advancedDownloadAttachment(string $messageId, array $configurations): AttachmentData
     {
         $url = $this->root().'message/download';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, array_merge([
@@ -72,7 +72,7 @@ class UazapiMessages extends UazapiInstanceEndpoint
             }
         }
 
-        return new AttachmentResponse($response->json());
+        return new AttachmentData($response->json());
     }
 
     public function loadMessagesFromChat()

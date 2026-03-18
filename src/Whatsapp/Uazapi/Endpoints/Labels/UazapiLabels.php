@@ -3,7 +3,7 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Labels;
 
 use Exception;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\LabelResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\LabelData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -106,9 +106,9 @@ class UazapiLabels extends UazapiInstanceEndpoint
      * @param string $labelId
      * @param string $name
      * @param integer $color
-     * @return void
+     * @return true
      */
-    public function edit(string $labelId, string $name, int $color)
+    public function edit(string $labelId, string $name, int $color): true
     {
         if($color < 0 || $color > 19){
             throw new Exception("The color value needs to be between 0-19!");
@@ -138,9 +138,9 @@ class UazapiLabels extends UazapiInstanceEndpoint
      * Delete a specific label.
      *
      * @param string $labelId
-     * @return void
+     * @return true
      */
-    public function delete(string $labelId)
+    public function delete(string $labelId): true
     {
         $url = $this->root().'label/edit';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -162,7 +162,7 @@ class UazapiLabels extends UazapiInstanceEndpoint
     }
 
     /**
-     * Returns a collection of LabelResponse objects.
+     * Returns a collection of LabelData objects.
      *
      * @return Collection
      */
@@ -181,7 +181,7 @@ class UazapiLabels extends UazapiInstanceEndpoint
         }
         $labels = collect();
         foreach($response->json() as $label){
-            $labels->add(new LabelResponse($label));
+            $labels->add(new LabelData($label));
         }
         return $labels;
     }

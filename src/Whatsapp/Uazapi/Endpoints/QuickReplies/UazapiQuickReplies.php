@@ -4,7 +4,7 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\QuickReplys;
 
 use Exception;
 use Helvetitec\Messaging\Enums\Uazapi\QuickReplyType;
-use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\QuickReplyResponse;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\QuickReplyData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Http;
 class UazapiQuickReplies extends UazapiInstanceEndpoint
 {
     /**
-     * Adds a new QuickReply and returns a QuickReplyResponse with its details
+     * Adds a new QuickReply and returns a QuickReplyData with its details
      *
      * @param string $shortCut
      * @param QuickReplyType $type
      * @param string|null $text
      * @param string|null $file
      * @param string|null $docName
-     * @return QuickReplyResponse
+     * @return QuickReplyData
      */
-    public function add(string $shortCut, QuickReplyType $type, ?string $text = null, ?string $file = null, ?string $docName = null): QuickReplyResponse
+    public function add(string $shortCut, QuickReplyType $type, ?string $text = null, ?string $file = null, ?string $docName = null): QuickReplyData
     {
         if($type == QuickReplyType::TEXT && empty($text)){
             throw new Exception('QuickReply of type QuickReplyType::TEXT need to contain the $text parameter');
@@ -54,11 +54,11 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
             }
         }
 
-        return new QuickReplyResponse($response->json('quickReplies')[0] ?? []);
+        return new QuickReplyData($response->json('quickReplies')[0] ?? []);
     }
 
     /**
-     * Updates a QuickReply and returns a QuickReplyResponse with its updated data, but can't update the ones made in Whatsapp.
+     * Updates a QuickReply and returns a QuickReplyData with its updated data, but can't update the ones made in Whatsapp.
      *
      * @param string $id
      * @param string $shortCut
@@ -66,9 +66,9 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
      * @param string|null $text
      * @param string|null $file
      * @param string|null $docName
-     * @return QuickReplyResponse
+     * @return QuickReplyData
      */
-    public function update(string $id, string $shortCut, QuickReplyType $type, ?string $text = null, ?string $file = null, ?string $docName = null): QuickReplyResponse
+    public function update(string $id, string $shortCut, QuickReplyType $type, ?string $text = null, ?string $file = null, ?string $docName = null): QuickReplyData
     {
         if($type == QuickReplyType::TEXT && empty($text)){
             throw new Exception('QuickReply of type QuickReplyType::TEXT need to contain the $text parameter');
@@ -102,7 +102,7 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
             }
         }
 
-        return new QuickReplyResponse($response->json('quickReplies')[0] ?? []);
+        return new QuickReplyData($response->json('quickReplies')[0] ?? []);
     }
 
     /**
@@ -139,7 +139,7 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
     }
 
     /**
-     * Lists all QuickReplys and returns them as a collection of QuickReplyResponse.
+     * Lists all QuickReplys and returns them as a collection of QuickReplyData.
      *
      * @return Collection
      */
@@ -156,7 +156,7 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
 
         $QuickReplys = collect();
         foreach($response->json() as $QuickReply){
-            $QuickReplys->add(new QuickReplyResponse($QuickReply));
+            $QuickReplys->add(new QuickReplyData($QuickReply));
         }
         return $QuickReplys;
     }
