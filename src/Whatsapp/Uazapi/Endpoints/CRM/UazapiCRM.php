@@ -3,6 +3,7 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\CRM;
 
 use Exception;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatData;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\CRMLeadDto;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Facades\Http;
@@ -52,9 +53,8 @@ class UazapiCRM extends UazapiInstanceEndpoint
 
     /**
      * Updates several custom CRM fields at once. The content inside the array should be [int, string] and have the same
-     * rules than in updateCustomField.
+     * rules than in updateCustomField. This method will return an array of the fieldmap.
      *
-     * @todo Return correct format
      * @param array $fields
      * @return array
      */
@@ -98,13 +98,12 @@ class UazapiCRM extends UazapiInstanceEndpoint
     }
 
     /**
-     * Edit all lead informations and returns an array of the response.
+     * Edit all lead informations and returns ChatData.
      * 
-     * @todo Return all the lead informations with CRMLeadResponse or such
      * @param CRMLeadDto $leadData
-     * @return array
+     * @return ChatData
      */
-    public function editLeadInformations(CRMLeadDto $leadData): array
+    public function editLeadInformations(CRMLeadDto $leadData): ChatData
     {
         $url = $this->root().'chat/editLead';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, $leadData->to());
@@ -120,6 +119,6 @@ class UazapiCRM extends UazapiInstanceEndpoint
             }
         }
 
-        return $response->json();
+        return new ChatData($response->json());
     }
 }
