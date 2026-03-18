@@ -4,6 +4,8 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Groups;
 
 use Exception;
 use Helvetitec\Messaging\Enums\Uazapi\GroupParticipantAction;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\GroupData;
+use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\PaginatedResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -14,12 +16,11 @@ class UazapiGroups extends UazapiInstanceEndpoint
      * Creates a new group with a name and its participants. The current user will already be one of the participants!
      * The participants need to be a list of international phonenumbers.
      * 
-     * @todo Return correct format
      * @param string $name
      * @param array $participants
-     * @return array
+     * @return GroupData
      */
-    public function create(string $name, array $participants): array
+    public function create(string $name, array $participants): GroupData
     {
         $url = $this->root().'group/create';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -37,21 +38,20 @@ class UazapiGroups extends UazapiInstanceEndpoint
             }
         }
 
-        return $response->json();
+        return new GroupData($response->json());
     }
 
     /**
      * Fetches informations about a certain group. If force is set to true the data will be fetched again, 
      * not taken from the servers cache.
      *
-     * @todo Return correct format
      * @param string $groupJid
      * @param boolean $getInviteLink
      * @param boolean $getRequestsParticipants
      * @param boolean $force
-     * @return array
+     * @return GroupData
      */
-    public function get(string $groupJid, bool $getInviteLink, bool $getRequestsParticipants, bool $force): array
+    public function get(string $groupJid, bool $getInviteLink, bool $getRequestsParticipants, bool $force): GroupData
     {
         $url = $this->root().'group/info';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -71,17 +71,16 @@ class UazapiGroups extends UazapiInstanceEndpoint
             }
         }
 
-        return $response->json();
+        return new GroupData($response->json());
     }
 
     /**
      * Fetches informations about a certain group per invite code.
      *
-     * @todo Return correct format
      * @param string $inviteCode
-     * @return array
+     * @return GroupData
      */
-    public function getByInvite(string $inviteCode): array
+    public function getByInvite(string $inviteCode): GroupData
     {
         $url = $this->root().'group/inviteInfo';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -100,17 +99,16 @@ class UazapiGroups extends UazapiInstanceEndpoint
             }
         }
 
-        return $response->json();
+        return new GroupData($response->json());
     }
 
     /**
      * Enters a group with an invitation code and returns the groups informations
      *
-     * @todo Return correct format
      * @param string $inviteCode
-     * @return array
+     * @return GroupData
      */
-    public function enterWithInvite(string $inviteCode): array
+    public function enterWithInvite(string $inviteCode): GroupData
     {
         $url = $this->root().'group/join';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -129,7 +127,7 @@ class UazapiGroups extends UazapiInstanceEndpoint
             }
         }
 
-        return $response->json('group');
+        return new GroupData($response->json('group'));
     }
 
     /**
@@ -161,7 +159,6 @@ class UazapiGroups extends UazapiInstanceEndpoint
     /**
      * Returns a list of all groups.
      * 
-     * @todo Return correct format, not only a collection of arrays
      * @return Collection
      */
     public function list(): Collection
@@ -175,13 +172,16 @@ class UazapiGroups extends UazapiInstanceEndpoint
             throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");            
         }
 
-        return collect($response->json('groups'));
+        $groups = collect();
+        foreach($response->json('groups') as $group){
+            $groups->add(new GroupData($group));
+        }
+        return $groups;
     }
 
     /**
-     * Returns an array with a paginated list of groups as collection and more informations about the pagination
+     * Returns a PaginatedResponse with a list of groups as collection and more informations about the pagination
      *
-     * @todo Return correct format. We do only return a collection of arrays in groups.
      * @param integer $page
      * @param integer $pageSize
      * @param integer $limit
@@ -189,9 +189,9 @@ class UazapiGroups extends UazapiInstanceEndpoint
      * @param string $search
      * @param boolean $force
      * @param boolean $noParticipants
-     * @return array [groups, pagination]
+     * @return PaginatedResponse
      */
-    public function paginated(int $page, int $pageSize, int $limit, int $offset, string $search, bool $force, bool $noParticipants): array
+    public function paginated(int $page, int $pageSize, int $limit, int $offset, string $search, bool $force, bool $noParticipants): PaginatedResponse
     {
         $url = $this->root().'group/list';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -210,10 +210,20 @@ class UazapiGroups extends UazapiInstanceEndpoint
             throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
         }
 
-        return [
-            'groups' => collect($response->json('groups')),
-            'pagination' => $response->json('pagination'),
-        ];
+        $groups = collect();
+        foreach($response->json('groups') as $group){
+            $groups->add(new GroupData($group));
+        }
+        $pagination = $response->json('pagination');
+        return new PaginatedResponse(
+            items: $groups,
+            totalRecords: $pagination['totalRecords'],
+            pageSize: $pagination['pageSize'],
+            currentPage: $pagination['currentPage'],
+            totalPages: $pagination['totalPages'],
+            hasNextPage: $pagination['hasNextPage'],
+            hasPreviousPage: $pagination['hasPreviousPage']
+        );
     }
     
     /**
@@ -446,11 +456,10 @@ class UazapiGroups extends UazapiInstanceEndpoint
     /**
      * Creates a community and returns the group array of it.
      *
-     * @todo Return correct format
      * @param string $name
-     * @return array
+     * @return GroupData
      */
-    public function createCommunity(string $name): array
+    public function createCommunity(string $name): GroupData
     {
         $url = $this->root().'community/create';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -473,7 +482,7 @@ class UazapiGroups extends UazapiInstanceEndpoint
             }
         }
 
-        return $response->json('group');
+        return new GroupData($response->json('group'));
     }
 
     /**

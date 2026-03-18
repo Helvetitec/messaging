@@ -3,8 +3,10 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Contacts;
 
 use Exception;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ContactData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\NumberVerifyData;
+use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\PaginatedResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -39,20 +41,20 @@ class UazapiContacts extends UazapiInstanceEndpoint
     }
 
     /**
-     * Returns an array with a paginated list of contacts as collection and more informations about the pagination
+     * Returns a PaginatedResponse  with a list of contacts as collection and more informations about the pagination
      *
      * @param integer $page
      * @param integer $pageSize
      * @param integer $limit
      * @param integer $offset
-     * @return array [contacts, pagination]
+     * @return PaginatedResponse
      */
     public function paginated(
         int $page, 
         int $pageSize, 
         int $limit, 
         int $offset
-    ): array
+    ): PaginatedResponse
     {
         $url = $this->root().'contacts/list';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -77,10 +79,16 @@ class UazapiContacts extends UazapiInstanceEndpoint
             $contacts->add(new ContactData($contact));
         }
         
-        return [
-            'pagination' => $response->json('pagination'),
-            'contacts' => $contacts
-        ];
+        $pagination = $response->json('pagination');
+        return new PaginatedResponse(
+            items: $contacts,
+            totalRecords: $pagination['totalRecords'],
+            pageSize: $pagination['pageSize'],
+            currentPage: $pagination['currentPage'],
+            totalPages: $pagination['totalPages'],
+            hasNextPage: $pagination['hasNextPage'],
+            hasPreviousPage: $pagination['hasPreviousPage']
+        );
     }
 
     /**
@@ -142,13 +150,13 @@ class UazapiContacts extends UazapiInstanceEndpoint
     }
 
     /**
-     * Returns the full chat informations with a number, returns array of the response at the moment.
-     * @todo Return correct format
+     * Returns the full chat informations with a number.
+     * 
      * @param string $number
      * @param boolean $preview
-     * @return array
+     * @return ChatData
      */
-    public function get(string $number, bool $preview)
+    public function get(string $number, bool $preview): ChatData
     {
         $url = $this->root().'chat/details';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, [
@@ -168,7 +176,7 @@ class UazapiContacts extends UazapiInstanceEndpoint
             }
         }
 
-        return $response->json();
+        return new ChatData($response->json());
     }
 
     /**
