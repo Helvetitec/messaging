@@ -28,17 +28,7 @@ class MarkReadResponse
     /**
      * Result of the operation as array with more informations
      *
-     * @var array{
-     * {
-     *      "message_id": "62AD1AD844E518180227BF68DA7ED710",
-     *      "status": "success"
-     * },
-     * {
-     *      "message_id": "ECB9DE48EB41F77BFA8491BFA8D6EF9B",
-     *      "status": "error",
-     *      "error": "Message not found"
-     * }
-     * }
+     * @var array ['message_id' => "1234", "status" => "error", "error" => "Message not found"]
      * 
      */
     public readonly array $results;
