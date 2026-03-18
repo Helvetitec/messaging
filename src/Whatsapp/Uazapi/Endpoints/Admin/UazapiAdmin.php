@@ -4,7 +4,7 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Admin;
 
 use Exception;
 use Helvetitec\Messaging\Whatsapp\Instances\UazapiInstance;
-use Helvetitec\Messaging\Whatsapp\Data\CreateInstanceResponse;
+use Helvetitec\Messaging\Whatsapp\Responses\CreateInstanceResponse;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\WebhookData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiAdminEndpoint;
 use Illuminate\Support\Collection;

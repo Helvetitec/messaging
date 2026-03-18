@@ -75,9 +75,28 @@ class UazapiMessages extends UazapiInstanceEndpoint
         return new AttachmentData($response->json());
     }
 
-    public function loadMessagesFromChat()
+    public function loadMessagesFromChat(string $chatId, int $limit, int $offset)
     {
+        $url = $this->root().'message/find';
+        $response = Http::asJson()->withHeader('token', $this->token)->post($url,[
+            'chatid' => $chatId,
+            'limit' => $limit,
+            'offset' => $offset
+        ]);
 
+        if(!$response->successful()){
+            if($response->status() == 400){
+                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+            }elseif($response->status() == 401){
+                throw new Exception("[UAZAPI] Invalid token!");
+            }elseif($response->status() == 404){
+                throw new Exception("[UAZAPI] Chat not found!");
+            }else{
+                $status = $response->status();
+                $body = $response->body();
+                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            }
+        }
     }
 
     public function markRead()
