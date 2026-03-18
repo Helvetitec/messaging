@@ -10,7 +10,6 @@ use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\PaginatedResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
-use Nette\NotImplementedException;
 
 class UazapiContacts extends UazapiInstanceEndpoint
 {

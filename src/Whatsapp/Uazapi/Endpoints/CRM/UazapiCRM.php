@@ -7,7 +7,6 @@ use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatData;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\CRMLeadDto;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Facades\Http;
-use Nette\NotImplementedException;
 
 class UazapiCRM extends UazapiInstanceEndpoint
 {
