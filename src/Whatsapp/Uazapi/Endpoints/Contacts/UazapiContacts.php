@@ -143,7 +143,7 @@ class UazapiContacts extends UazapiInstanceEndpoint
 
     /**
      * Returns the full chat informations with a number, returns array of the response at the moment.
-     * @todo Add correct return format
+     * @todo Return correct format
      * @param string $number
      * @param boolean $preview
      * @return array

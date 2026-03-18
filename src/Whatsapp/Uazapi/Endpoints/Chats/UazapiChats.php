@@ -156,7 +156,7 @@ class UazapiChats extends UazapiInstanceEndpoint
     /**
      * Search the chats with a certain body and returns an array of the response.
      *
-     * @todo Implement better response, not only array
+     * @todo Return correct format
      * @param array $body
      * @return array
      */

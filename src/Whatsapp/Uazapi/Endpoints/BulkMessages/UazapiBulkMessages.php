@@ -7,6 +7,7 @@ use Helvetitec\Messaging\Enums\BulkMessageAction;
 use Helvetitec\Messaging\Enums\BulkMessageStatus;
 use Helvetitec\Messaging\Whatsapp\DTOs\BulkMessageDto;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\BulkMessageData;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\MessageData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -157,9 +158,8 @@ class UazapiBulkMessages extends UazapiInstanceEndpoint
     }
 
     /**
-     * Returns all messages from a specific BulkMessage.
+     * Returns all messages from a specific BulkMessage as a MessageData collection.
      * 
-     * @todo Add Message object, not only a collection of arrays.
      * @param string $folderId
      * @param string|null $messageStatus
      * @param integer|null $page
@@ -185,6 +185,10 @@ class UazapiBulkMessages extends UazapiInstanceEndpoint
             }
         }
 
-        return collect($response->json('messages'));
+        $messages = collect();
+        foreach($response->json('messages') as $message){
+            $messages->add(new MessageData($message));
+        }
+        return $messages;
     }
 }
