@@ -3,9 +3,10 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Chats;
 
 use Exception;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
-use Nette\NotImplementedException;
 
 class UazapiChats extends UazapiInstanceEndpoint
 {
@@ -154,13 +155,12 @@ class UazapiChats extends UazapiInstanceEndpoint
     }
 
     /**
-     * Search the chats with a certain body and returns an array of the response.
+     * Search the chats with a certain body and returns a collection of ChatData.
      *
-     * @todo Return correct format
      * @param array $body
-     * @return array
+     * @return Collection
      */
-    public function search(array $body)
+    public function search(array $body): Collection
     {
         $url = $this->root().'chat/find';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, $body);
@@ -179,6 +179,11 @@ class UazapiChats extends UazapiInstanceEndpoint
             }
         }
 
-        return $response->json();
+        $chats = collect();
+        foreach($response->json('chats') as $chat)
+        {
+            $chats->add(new ChatData($chat));
+        }
+        return $chats;
     }
 }
