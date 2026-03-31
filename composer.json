@@ -2,6 +2,7 @@
     "name": "helvetitec/messaging",
     "description": "Laravel Messaging package for Whatsapp and others.",
     "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Helvetitec\\Messaging\\": "src/"
