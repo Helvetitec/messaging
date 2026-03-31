@@ -3,7 +3,7 @@
 use Helvetitec\Messaging\Enums\StoryMediaType;
 use Helvetitec\Messaging\Enums\WhatsappPresence;
 
-interface WhatsappSender
+interface WhatsappHandler
 {
     public function server(string $server): static;
     public function token(string $token): static;

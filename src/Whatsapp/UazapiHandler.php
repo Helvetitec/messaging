@@ -7,9 +7,9 @@ use Helvetitec\Messaging\Enums\Uazapi\PixType;
 use Helvetitec\Messaging\Enums\WhatsappPresence;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\MessageConfigDto;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Messages\UazapiSendMessages;
-use WhatsappSender;
+use WhatsappHandler;
 
-class UazapiSender implements WhatsappSender
+class UazapiHandler implements WhatsappHandler
 {
     private ?string $token = null;
     private ?string $receiver = null;
