@@ -9,7 +9,7 @@ interface WhatsappSender
     public function receiver(string $identifier): static;
     public function reply(string $replyId): static;
 
-    //Messages To Send
+    #region Messages To Send
     public function sendText(string $text, bool $linkPreview = false): string;
     public function sendImage(string $file, string $caption): string;
     public function sendVideo(string $file, string $caption): string;
@@ -23,4 +23,5 @@ interface WhatsappSender
     public function sendLocation(float $latitude, float $longitude, ?string $name, ?string $address, ): string;
     public function updatePresence(WhatsappPresence $presence, int $durationInMs): bool;
     public function sendStory(StoryMediaType $type, int $backgroundColor, int $font, ?string $text, ?string $file): string;
+    #endregion
 }
