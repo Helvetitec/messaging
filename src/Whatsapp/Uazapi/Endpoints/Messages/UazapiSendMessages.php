@@ -5,7 +5,7 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Messages;
 use Exception;
 use Helvetitec\Messaging\Enums\Uazapi\MediaType;
 use Helvetitec\Messaging\Enums\Uazapi\PixType;
-use Helvetitec\Messaging\Enums\Uazapi\StoryMediaType;
+use Helvetitec\Messaging\Enums\StoryMediaType;
 use Helvetitec\Messaging\Enums\WhatsappPresence;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\MessageData;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\MessageConfigDto;
@@ -256,7 +256,7 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
     }
 
     /**
-     * Sends a vCard with all informations to a number and returns an array of the message sent.
+     * Sends a vCard with all informations to a number and returns a MessageData object of the message sent.
      *
      * @param string $number
      * @param string $fullName

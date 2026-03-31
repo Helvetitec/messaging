@@ -1,6 +1,6 @@
 <?php
 
-namespace Helvetitec\Messaging\Enums\Uazapi;
+namespace Helvetitec\Messaging\Enums;
 
 enum StoryMediaType: string
 {

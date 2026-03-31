@@ -2,9 +2,7 @@
 
 namespace Helvetitec\Messaging\Whatsapp\Messages;
 
-use Helvetitec\Messaging\Message;
-
-abstract class WhatsappMessage extends Message
+abstract class WhatsappMessage
 {
     /**
      * Whatsapp Instance id

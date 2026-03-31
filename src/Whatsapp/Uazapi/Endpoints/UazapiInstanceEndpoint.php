@@ -8,4 +8,9 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints;
 class UazapiInstanceEndpoint extends UazapiEndpoint
 {
     public string $token;
+
+    public function __construct(string $token)
+    {
+        $this->token = $token;
+    }
 }
