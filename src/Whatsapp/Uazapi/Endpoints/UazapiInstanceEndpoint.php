@@ -9,8 +9,9 @@ class UazapiInstanceEndpoint extends UazapiEndpoint
 {
     public string $token;
 
-    public function __construct(string $token)
+    public function __construct(string $subdomain, string $token)
     {
+        $this->subdomain = $subdomain;
         $this->token = $token;
     }
 }

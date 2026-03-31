@@ -8,7 +8,7 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints;
 abstract class UazapiEndpoint
 {
     /**
-     * The subdomain fr the Uazapi Endpoint.
+     * The subdomain for the Uazapi Endpoint.
      *
      * @var string
      */

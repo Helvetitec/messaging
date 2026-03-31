@@ -5,6 +5,7 @@ use Helvetitec\Messaging\Enums\WhatsappPresence;
 
 interface WhatsappSender
 {
+    public function server(string $server): static;
     public function token(string $token): static;
     public function receiver(string $identifier): static;
     public function reply(string $replyId): static;

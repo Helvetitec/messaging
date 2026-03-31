@@ -14,7 +14,20 @@ class UazapiSender implements WhatsappSender
     private ?string $token = null;
     private ?string $receiver = null;
     private ?string $replyId = null;
+    private ?string $subdomain = null;
     private int $delay = 0;
+
+    /**
+     * Set subdomain as server.
+     *
+     * @param string $server
+     * @return static
+     */
+    public function server(string $server): static
+    {
+        $this->subdomain = $server;
+        return $this;
+    }
 
     public function token(string $token): static
     {
@@ -43,7 +56,7 @@ class UazapiSender implements WhatsappSender
     #region Messages To Send
     public function sendText(string $text, bool $linkPreview = false): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -54,7 +67,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendImage(string $file, string $caption): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -65,7 +78,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendVideo(string $file, string $caption): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -76,7 +89,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendAudio(string $file): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -87,7 +100,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendMyAudio(string $file): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -98,7 +111,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendPtt(string $file): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -109,7 +122,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendPtv(string $file): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -120,7 +133,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendSticker(string $file): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -131,7 +144,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendDocument(string $file, string $docName, string $caption): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -142,7 +155,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendVCard(string $fullName, string $phoneNumber, string $organization, string $email, string $url): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -153,7 +166,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendLocation(float $latitude, float $longitude, ?string $name, ?string $address, ): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
@@ -164,20 +177,20 @@ class UazapiSender implements WhatsappSender
 
     public function updatePresence(WhatsappPresence $presence, int $durationInMs): bool
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         return $sendMessages->updatePresence($this->receiver, $presence, $durationInMs);
     }
 
     public function sendStory(StoryMediaType $type, int $backgroundColor, int $font, ?string $text, ?string $file): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $response = $sendMessages->sendStory($type, $backgroundColor, $font, $text, $file);
         return $response->messageId;
     }
 
     public function sendButton(string $text, array $choices, ?string $footerText, ?string $imageButton, ): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -187,7 +200,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendCarousel(string $text, array $choices): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -197,7 +210,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendAdvancedCarousel(string $text, array $carousel): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -207,7 +220,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendList(string $text, array $choices, string $listButton, ?string $footerText): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -217,7 +230,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendPoll(string $text, array $choices, int $selectableCount): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -227,7 +240,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendPixPayment(string $amount, string $text, string $pixKey, string $pixName, PixType $pixType): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -237,7 +250,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendInvoicePayment(string $amount, string $text, string $boletoCode, string $additionalNote, string $fileUrl, string $fileName, ?MessageConfigDto $messageConfig = null): string
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -247,7 +260,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendCombinedPayment(string $amount, string $text, string $pixKey, PixType $pixType, string $pixName, string $boletoCode, string $additionalNote, string $fileUrl, string $fileName,): string 
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -257,7 +270,7 @@ class UazapiSender implements WhatsappSender
 
     public function sendPixButton(PixType $pixType, string $pixKey, ?string $pixName): string 
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
@@ -267,7 +280,7 @@ class UazapiSender implements WhatsappSender
 
     public function requestLocation(string $text): string 
     {
-        $sendMessages = new UazapiSendMessages($this->token);
+        $sendMessages = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay
         );
