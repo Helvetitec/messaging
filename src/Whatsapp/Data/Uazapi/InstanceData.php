@@ -27,7 +27,7 @@ class InstanceData
     public readonly string $chatbotStopConversation;
     public readonly int $chatbotStopMinutes;
     public readonly int $chatbotStopWhenYouSendMessage;
-    public readonly array $fieldsMap;
+    public readonly ?array $fieldsMap;
     public readonly string $currentTime;
     public readonly string $createdAt;
     public readonly string $updatedAt;
@@ -57,7 +57,7 @@ class InstanceData
         $this->chatbotStopConversation = $payload['chatbot_stopConversation'];
         $this->chatbotStopMinutes = $payload['chatbot_stopMinutes'];
         $this->chatbotStopWhenYouSendMessage = $payload['chatbot_stopWhenYouSendMsg'];
-        $this->fieldsMap = $payload['fieldsMap'];
+        $this->fieldsMap = $payload['fieldsMap'] ?? null;
         $this->currentTime = $payload['currentTime'];
         $this->createdAt = $payload['created'];
         $this->updatedAt = $payload['updated'];
