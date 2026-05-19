@@ -308,11 +308,19 @@ class UazapiHandler implements WhatsappHandler
     #endregion
     
     #region Contacts
+    
+    /**
+     * Verify numbers and return a collection of NumberVerifyData.
+     *
+     * @param array<int,string> $numbers
+     * @return Collection<int,\Helvetitec\Messaging\Whatsapp\Data\Uazapi\NumberVerifyData>
+     */
     public function verifyNumbers(array $numbers): Collection
     {
         $contactsEndpoint = new UazapiContacts($this->subdomain, $this->token);
         return $contactsEndpoint->verifyNumbers($numbers);
     }
+
     #endregion
 
     #region Admin
