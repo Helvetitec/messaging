@@ -43,7 +43,7 @@ class InstanceData
         $this->profileName = $payload['profileName'];
         $this->profilePicUrl = $payload['profilePicUrl'];
         $this->isBusiness = $payload['isBusiness'];
-        $this->platform = $payload['platform'];
+        $this->platform = $payload['platform'] ?? $payload['plataform'];
         $this->systemName = $payload['systemName'];
         $this->owner = $payload['owner'];
         $this->currentPresence = $payload['current_presence'];
