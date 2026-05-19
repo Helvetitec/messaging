@@ -354,5 +354,11 @@ class UazapiHandler implements WhatsappHandler
         $instanceEndpoint = new UazapiInstance($this->subdomain, $this->token);
         return $instanceEndpoint->connect($systemName, $phone, $browser, $proxyManagedCountry, $proxyManagedState, $proxyManagedCity);
     }
+
+    public function deleteInstance(): bool
+    {
+        $instanceEndpoint = new UazapiInstance($this->subdomain, $this->token);
+        return $instanceEndpoint->delete();
+    }
     #endregion
 }
