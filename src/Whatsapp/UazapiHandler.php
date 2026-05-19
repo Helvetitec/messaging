@@ -2,6 +2,7 @@
 
 namespace Helvetitec\Messaging\Whatsapp;
 
+use Helvetitec\Messaging\Contracts\WhatsappHandler;
 use Helvetitec\Messaging\Enums\StoryMediaType;
 use Helvetitec\Messaging\Enums\Uazapi\PixType;
 use Helvetitec\Messaging\Enums\WhatsappPresence;
@@ -13,7 +14,6 @@ use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Contacts\UazapiContacts;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Instance\UazapiInstance;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Messages\UazapiSendMessages;
 use Illuminate\Support\Collection;
-use WhatsappHandler;
 
 class UazapiHandler implements WhatsappHandler
 {

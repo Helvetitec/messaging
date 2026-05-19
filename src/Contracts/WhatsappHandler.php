@@ -1,5 +1,7 @@
 <?php
 
+namespace Helvetitec\Messaging\Contracts;
+
 use Helvetitec\Messaging\Enums\StoryMediaType;
 use Helvetitec\Messaging\Enums\WhatsappPresence;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\SystemStatusDto;
