@@ -24,11 +24,11 @@ class UazapiWebhooks extends UazapiInstanceEndpoint
         $response = Http::asJson()->withHeader('token', $this->token)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -70,13 +70,13 @@ class UazapiWebhooks extends UazapiInstanceEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -89,13 +89,13 @@ class UazapiWebhooks extends UazapiInstanceEndpoint
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, $request);
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 

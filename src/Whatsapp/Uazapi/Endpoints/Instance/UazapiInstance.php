@@ -46,15 +46,15 @@ final class UazapiInstance extends UazapiInstanceEndpoint
         $response = Http::asJson()->withHeader('token', $this->token)->post($url, $requestArray);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Instance not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Instance not found!");
             }elseif($response->status() == 429){
-                throw new HttpStatusException("[UAZAPI] Max instances on server reached!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Max instances on server reached!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -72,13 +72,13 @@ final class UazapiInstance extends UazapiInstanceEndpoint
         $response = Http::asJson()->withHeader('token', $this->token)->post($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Instance not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return new InstanceData($response->json('instance'));
@@ -95,13 +95,13 @@ final class UazapiInstance extends UazapiInstanceEndpoint
         $response = Http::asJson()->withHeader('token', $this->token)->post($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Instance not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -128,13 +128,13 @@ final class UazapiInstance extends UazapiInstanceEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Instance not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return new InstanceData($response->json());
@@ -151,13 +151,13 @@ final class UazapiInstance extends UazapiInstanceEndpoint
         $response = Http::asJson()->withHeader('token', $this->token)->delete($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Instance not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return true;
@@ -199,13 +199,13 @@ final class UazapiInstance extends UazapiInstanceEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid presence value!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid presence value!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -228,13 +228,13 @@ final class UazapiInstance extends UazapiInstanceEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid request for message delay!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid request for message delay!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return new InstanceData($response->json('instance'));

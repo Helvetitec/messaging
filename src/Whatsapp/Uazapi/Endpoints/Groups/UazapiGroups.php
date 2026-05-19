@@ -30,11 +30,11 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -63,11 +63,11 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -89,13 +89,13 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Group for invite code \"{$inviteCode}\" not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Group for invite code \"{$inviteCode}\" not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -117,13 +117,13 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] Access for user not granted!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Access for user not granted!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -145,11 +145,11 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -169,7 +169,7 @@ class UazapiGroups extends UazapiInstanceEndpoint
         if(!$response->successful()){
             $status = $response->status();
             $body = $response->body();
-            throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");            
+            throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");            
         }
 
         $groups = collect();
@@ -207,7 +207,7 @@ class UazapiGroups extends UazapiInstanceEndpoint
         if(!$response->successful()){
             $status = $response->status();
             $body = $response->body();
-            throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
         }
 
         $groups = collect();
@@ -241,13 +241,13 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to reset invite code!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to reset invite code!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -272,13 +272,13 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to reset invite code!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to reset invite code!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -302,17 +302,17 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to reset invite code!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to reset invite code!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Group not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Group not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -336,17 +336,17 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to reset invite code!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to reset invite code!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Group not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Group not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -370,17 +370,17 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to reset invite code!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to reset invite code!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Group not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Group not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -404,17 +404,17 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to reset invite code!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to reset invite code!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Group not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Group not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -440,13 +440,13 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to reset invite code!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to reset invite code!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -468,17 +468,17 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to create communities!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to create communities!");
             }elseif($response->status() == 429){
-                throw new HttpStatusException("[UAZAPI] Group creation limit reached!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Group creation limit reached!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -506,15 +506,15 @@ class UazapiGroups extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] User does not have permissions to create communities!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] User does not have permissions to create communities!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 

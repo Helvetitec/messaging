@@ -36,13 +36,13 @@ final class UazapiAdmin extends UazapiAdminEndpoint
 
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] Instance not found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -60,13 +60,13 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         $response = Http::withHeader('admintoken', $this->adminToken)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] Admin token invalid!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Admin token invalid!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -99,13 +99,13 @@ final class UazapiAdmin extends UazapiAdminEndpoint
 
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] Admin token invalid!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Admin token invalid!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -123,15 +123,15 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         $response = Http::withHeader('admintoken', $this->adminToken)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] Admin token invalid!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Admin token invalid!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] No global webhook found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] No global webhook found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return new WebhookData($response->json());
@@ -155,17 +155,17 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
-                throw new HttpStatusException("[UAZAPI] Admin token invalid!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Admin token invalid!");
             }elseif($response->status() == 404){
-                throw new HttpStatusException("[UAZAPI] No global webhook found!");
+                throw new HttpStatusException($response->status(), "[UAZAPI] No global webhook found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return new WebhookData($response->json());
@@ -191,7 +191,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         if(!$response->successful()){
             $status = $response->status();
             $body = $response->body();
-            throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
         }
         $responseArr = $response->json();
 
