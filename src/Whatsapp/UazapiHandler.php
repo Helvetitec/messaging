@@ -5,8 +5,11 @@ namespace Helvetitec\Messaging\Whatsapp;
 use Helvetitec\Messaging\Enums\StoryMediaType;
 use Helvetitec\Messaging\Enums\Uazapi\PixType;
 use Helvetitec\Messaging\Enums\WhatsappPresence;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\InstanceData;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\MessageConfigDto;
+use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Admin\UazapiAdmin;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Contacts\UazapiContacts;
+use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Instance\UazapiInstance;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Messages\UazapiSendMessages;
 use Illuminate\Support\Collection;
 use WhatsappHandler;
@@ -14,6 +17,7 @@ use WhatsappHandler;
 class UazapiHandler implements WhatsappHandler
 {
     public function __construct(
+        private ?string $adminToken = null,
         private ?string $token = null,
         private ?string $receiver = null,
         private ?string $replyId = null,
@@ -32,6 +36,12 @@ class UazapiHandler implements WhatsappHandler
     public function server(string $server): static
     {
         $this->subdomain = $server;
+        return $this;
+    }
+
+    public function adminToken(string $adminToken): static
+    {
+        $this->adminToken = $adminToken;
         return $this;
     }
 
@@ -303,4 +313,30 @@ class UazapiHandler implements WhatsappHandler
     }
     #endregion
 
+    #region Admin
+    public function createInstance(
+        string $name,
+        ?string $adminField01 = null,
+        ?string $adminField02 = null
+    ): InstanceData
+    {
+        $adminEndpoint = new UazapiAdmin($this->subdomain, $this->adminToken);
+        return $adminEndpoint->createInstance($name, $adminField01, $adminField02);
+    }
+    #endregion
+
+    #region Instance
+    public function connectInstance(
+        string $systemName, 
+        ?string $phone = null, 
+        string $browser = "auto", 
+        string $proxyManagedCountry = "br", 
+        string $proxyManagedState = "sp", 
+        string $proxyManagedCity = "campinas"
+    ): InstanceData
+    {
+        $instanceEndpoint = new UazapiInstance($this->subdomain, $this->token);
+        return $instanceEndpoint->connect($systemName, $phone, $browser, $proxyManagedCountry, $proxyManagedState, $proxyManagedCity);
+    }
+    #endregion
 }

@@ -15,12 +15,30 @@ final class UazapiInstance extends UazapiInstanceEndpoint
     /**
      * Connects the instance to Whatsapp. If $phone is not null, it will fetch a pairing code.
      *
+     * @param string $systemName
      * @param string|null $phone
+     * @param string $proxyManagedCountry
+     * @param string $proxyManagedState
+     * @param string $proxyManagedCity
+     * 
      * @return InstanceData
      */
-    public function connect(?string $phone = null): InstanceData
+    public function connect( 
+        string $systemName,
+        ?string $phone = null,
+        string $browser = "auto",
+        string $proxyManagedCountry = "br",
+        string $proxyManagedState = "sp",
+        string $proxyManagedCity = "campinas"
+    ): InstanceData
     {
-        $requestArray = [];
+        $requestArray = [
+            'browser' => $browser,
+            'systemName' => $systemName,
+            'proxy_managed_country' => $proxyManagedCountry,
+            'proxy_managed_state' => $proxyManagedState,
+            'proxy_managed_city' => $proxyManagedCity
+        ];
         if(!empty($phone)){
             $requestArray['phone'] = $phone;
         }

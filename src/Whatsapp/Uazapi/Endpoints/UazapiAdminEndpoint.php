@@ -13,4 +13,10 @@ abstract class UazapiAdminEndpoint extends UazapiEndpoint
      * @var string
      */
     public string $adminToken;
+
+    public function __construct(string $subdomain, string $adminToken)
+    {
+        $this->subdomain = $subdomain;
+        $this->adminToken = $adminToken;
+    }
 }

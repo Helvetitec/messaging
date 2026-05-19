@@ -15,30 +15,21 @@ final class UazapiAdmin extends UazapiAdminEndpoint
      * Creates an instance and returns its Instance data
      *
      * @param string $name
-     * @param string $systemName
-     * @param string $fingerPrintProfile
-     * @param string $browser
      * @param string|null $adminField01
      * @param string|null $adminField02
      * @return InstanceData
      */
     public function createInstance(
-        string $name, 
-        string $systemName = "apiLocal", 
-        string $fingerPrintProfile = "chrome", 
-        string $browser = "chrome", 
+        string $name,
         ?string $adminField01 = null, 
         ?string $adminField02 = null
     ) : InstanceData
     {
-        $url = $this->root().'instance/init';
+        $url = $this->root().'instance/create';
         $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url, [
             "name" => $name,
-            "systemName" => $systemName,
             "adminField01" => $adminField01,
-            "adminField02" => $adminField02,
-            "fingerprintProfile" => $fingerPrintProfile,
-            "browser" => $browser
+            "adminField02" => $adminField02
         ]);
 
         if(!$response->successful()){
