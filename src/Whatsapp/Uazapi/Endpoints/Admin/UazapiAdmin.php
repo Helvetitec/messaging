@@ -8,6 +8,7 @@ use Helvetitec\Messaging\Whatsapp\Data\Uazapi\InstanceData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\WebhookData;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\SystemStatusDto;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiAdminEndpoint;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
@@ -204,7 +205,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
             ok: $statusArr['server_status'] == 'running',
             info: $responseArr['info'],
             dc: $statusArr['dc'],
-            lastCheck: $statusArr['last_check'],
+            lastCheck: Carbon::parse($statusArr['last_check']),
             serverStatus: $statusArr['server_status'],
             totalInstances: $statusArr['total_instances']
         ); 
