@@ -201,6 +201,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
 
         $statusArr = $responseArr['status'];
         return new SystemStatusDto(
+            ok: $statusArr['server_status'] == 'running',
             info: $responseArr['info'],
             dc: $statusArr['dc'],
             lastCheck: $statusArr['last_check'],
