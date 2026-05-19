@@ -2,7 +2,7 @@
 
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Contacts;
 
-use Exception;
+use Helvetitec\Messaging\Exceptions\HttpStatusException;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ChatData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\ContactData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\NumberVerifyData;
@@ -24,11 +24,11 @@ class UazapiContacts extends UazapiInstanceEndpoint
         $response = Http::asJson()->withHeader('token', $this->token)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -65,11 +65,11 @@ class UazapiContacts extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -107,13 +107,13 @@ class UazapiContacts extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -135,13 +135,13 @@ class UazapiContacts extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -165,13 +165,13 @@ class UazapiContacts extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -193,13 +193,13 @@ class UazapiContacts extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 

@@ -2,7 +2,7 @@
 
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Chatbot;
 
-use Exception;
+use Helvetitec\Messaging\Exceptions\HttpStatusException;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotAgentDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotFunctionDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\ChatbotTriggerDto;
@@ -48,13 +48,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -76,13 +76,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -106,13 +106,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -135,13 +135,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return true;
@@ -159,11 +159,11 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] No permissions!");
+                throw new HttpStatusException("[UAZAPI] No permissions!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -189,13 +189,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -219,13 +219,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -248,13 +248,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return true;
@@ -272,11 +272,11 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] No permissions!");
+                throw new HttpStatusException("[UAZAPI] No permissions!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -308,13 +308,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -344,13 +344,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -373,13 +373,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -398,11 +398,11 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] No permissions!");
+                throw new HttpStatusException("[UAZAPI] No permissions!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -428,13 +428,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -458,13 +458,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -487,13 +487,13 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -512,11 +512,11 @@ class UazapiChatbot extends UazapiInstanceEndpoint
         
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] No permissions!");
+                throw new HttpStatusException("[UAZAPI] No permissions!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 

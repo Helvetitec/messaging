@@ -2,7 +2,7 @@
 
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Calls;
 
-use Exception;
+use Helvetitec\Messaging\Exceptions\HttpStatusException;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Facades\Http;
 
@@ -22,13 +22,13 @@ class UazapiCalls extends UazapiInstanceEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -49,13 +49,13 @@ class UazapiCalls extends UazapiInstanceEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 

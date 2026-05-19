@@ -4,6 +4,7 @@ namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\QuickReplys;
 
 use Exception;
 use Helvetitec\Messaging\Enums\Uazapi\QuickReplyType;
+use Helvetitec\Messaging\Exceptions\HttpStatusException;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\QuickReplyData;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiInstanceEndpoint;
 use Illuminate\Support\Collection;
@@ -40,17 +41,17 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new Exception("[UAZAPI] Cant edit template made with Whatsapp!");
+                throw new HttpStatusException("[UAZAPI] Cant edit template made with Whatsapp!");
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -88,17 +89,17 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new Exception("[UAZAPI] Cant edit template made with Whatsapp!");
+                throw new HttpStatusException("[UAZAPI] Cant edit template made with Whatsapp!");
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -121,17 +122,17 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
 
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid token!");
+                throw new HttpStatusException("[UAZAPI] Invalid token!");
             }elseif($response->status() == 403){
-                throw new Exception("[UAZAPI] Cant edit template made with Whatsapp!");
+                throw new HttpStatusException("[UAZAPI] Cant edit template made with Whatsapp!");
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -151,7 +152,7 @@ class UazapiQuickReplies extends UazapiInstanceEndpoint
         if(!$response->successful()){
             $status = $response->status();
             $body = $response->body();
-            throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+            throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
         }
 
         $QuickReplys = collect();
