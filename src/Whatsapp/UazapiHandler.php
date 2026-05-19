@@ -18,10 +18,10 @@ class UazapiHandler implements WhatsappHandler
 {
     private ?string $receiver = null;
     private ?string $replyId = null;
-    private ?string $subdomain = null;
     private int $delay = 0;
     
     public function __construct(
+        private ?string $subdomain = null,
         private ?string $adminToken = null,
         private ?string $token = null,
     )
