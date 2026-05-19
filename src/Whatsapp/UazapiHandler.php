@@ -9,6 +9,7 @@ use Helvetitec\Messaging\Enums\WhatsappPresence;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\InstanceData;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\MessageConfigDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\SystemStatusDto;
+use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\InstanceStatusResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Admin\UazapiAdmin;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Contacts\UazapiContacts;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Instance\UazapiInstance;
@@ -353,6 +354,12 @@ class UazapiHandler implements WhatsappHandler
     {
         $instanceEndpoint = new UazapiInstance($this->subdomain, $this->token);
         return $instanceEndpoint->connect($systemName, $phone, $browser, $proxyManagedCountry, $proxyManagedState, $proxyManagedCity);
+    }
+
+    public function instanceStatus(): InstanceStatusResponse
+    {
+        $instanceEndpoint = new UazapiInstance($this->subdomain, $this->token);
+        return $instanceEndpoint->status();
     }
 
     public function deleteInstance(): bool
