@@ -3,8 +3,10 @@
 namespace Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Admin;
 
 use Exception;
+use Helvetitec\Messaging\Exceptions\HttpStatusException;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\InstanceData;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\WebhookData;
+use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\SystemStatusDto;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\UazapiAdminEndpoint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -34,13 +36,13 @@ final class UazapiAdmin extends UazapiAdminEndpoint
 
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] Instance not found!");
+                throw new HttpStatusException("[UAZAPI] Instance not found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -58,13 +60,13 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         $response = Http::withHeader('admintoken', $this->adminToken)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
-                throw new Exception("[UAZAPI] Admin token invalid!");
+                throw new HttpStatusException("[UAZAPI] Admin token invalid!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -97,13 +99,13 @@ final class UazapiAdmin extends UazapiAdminEndpoint
 
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
-                throw new Exception("[UAZAPI] Admin token invalid!");
+                throw new HttpStatusException("[UAZAPI] Admin token invalid!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
 
@@ -121,15 +123,15 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         $response = Http::withHeader('admintoken', $this->adminToken)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
-                throw new Exception("[UAZAPI] Admin token invalid!");
+                throw new HttpStatusException("[UAZAPI] Admin token invalid!");
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] No global webhook found!");
+                throw new HttpStatusException("[UAZAPI] No global webhook found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return new WebhookData($response->json());
@@ -153,17 +155,17 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         ]);
         if(!$response->successful()){
             if($response->status() == 400){
-                throw new Exception("[UAZAPI] Invalid payload! - ".$response->body());
+                throw new HttpStatusException("[UAZAPI] Invalid payload! - ".$response->body());
             }elseif($response->status() == 401){
-                throw new Exception("[UAZAPI] Invalid/Expired Token!");
+                throw new HttpStatusException("[UAZAPI] Invalid/Expired Token!");
             }elseif($response->status() == 403){
-                throw new Exception("[UAZAPI] Admin token invalid!");
+                throw new HttpStatusException("[UAZAPI] Admin token invalid!");
             }elseif($response->status() == 404){
-                throw new Exception("[UAZAPI] No global webhook found!");
+                throw new HttpStatusException("[UAZAPI] No global webhook found!");
             }else{
                 $status = $response->status();
                 $body = $response->body();
-                throw new Exception("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+                throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
         return new WebhookData($response->json());
@@ -179,5 +181,31 @@ final class UazapiAdmin extends UazapiAdminEndpoint
         $url = $this->root().'admin/restart';
         $response = Http::asJson()->withHeader('admintoken', $this->adminToken)->post($url);
         return $response->successful();
+    }
+
+    public function systemStatus(): SystemStatusDto
+    {
+        $url = $this->root().'status';
+        $response = Http::get($url);
+
+        if(!$response->successful()){
+            $status = $response->status();
+            $body = $response->body();
+            throw new HttpStatusException("[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
+        }
+        $responseArr = $response->json();
+
+        if(!$responseArr || !is_array($responseArr)){
+            throw new Exception("[UAZAPI] Invalid return while checking system status for {$this->root()}: ".json_encode($responseArr));
+        }
+
+        $statusArr = $responseArr['status'];
+        return new SystemStatusDto(
+            info: $responseArr['info'],
+            dc: $statusArr['dc'],
+            lastCheck: $statusArr['last_check'],
+            serverStatus: $statusArr['server_status'],
+            totalInstances: $statusArr['total_instances']
+        ); 
     }
 }
