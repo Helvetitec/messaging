@@ -13,12 +13,16 @@ use WhatsappHandler;
 
 class UazapiHandler implements WhatsappHandler
 {
-    private ?string $token = null;
-    private ?string $receiver = null;
-    private ?string $replyId = null;
-    private ?string $subdomain = null;
-    private int $delay = 0;
-
+    public function __construct(
+        private ?string $token = null,
+        private ?string $receiver = null,
+        private ?string $replyId = null,
+        private ?string $subdomain = null,
+        private int $delay = 0
+    )
+    {
+    }
+    
     /**
      * Set subdomain as server.
      *
