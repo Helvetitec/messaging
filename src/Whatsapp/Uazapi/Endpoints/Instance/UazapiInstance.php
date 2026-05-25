@@ -92,7 +92,7 @@ final class UazapiInstance extends UazapiInstanceEndpoint
     public function status(): InstanceStatusResponse
     {
         $url = $this->root().'instance/status';
-        $response = Http::asJson()->withHeader('token', $this->token)->post($url);
+        $response = Http::asJson()->withHeader('token', $this->token)->get($url);
         if(!$response->successful()){
             if($response->status() == 401){
                 throw new HttpStatusException($response->status(), "[UAZAPI] Invalid/Expired Token!");
