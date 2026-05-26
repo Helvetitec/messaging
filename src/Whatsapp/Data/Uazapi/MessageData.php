@@ -2,6 +2,8 @@
 
 namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
+use Helvetitec\Messaging\Enums\WhatsappMessageType;
+
 class MessageData
 {
     /**
@@ -47,11 +49,11 @@ class MessageData
      */
     public readonly bool $fromMe;
     /**
-     * Type of the content of the message
+     * Type of the content of the message. Will try to cast to WhatsappMessageType but will use string if type was not found
      *
-     * @var string
+     * @var WhatsappMessageType|string
      */
-    public readonly string $messageType; //We probably can use an enum for this?
+    public readonly WhatsappMessageType|string $messageType;
     /**
      * Origin platform of the message
      *
@@ -200,7 +202,7 @@ class MessageData
         $this->senderName = $payload['senderName'];
         $this->isGroup = $payload['isGroup'];
         $this->fromMe = $payload['fromMe'];
-        $this->messageType = $payload['messageType']; //We probably can use an enum for this?
+        $this->messageType = WhatsappMessageType::tryFrom(lcfirst($payload['messageType'])) ?? $payload['messageType'];
         $this->source = $payload['source'];
         $this->messageTimestamp = $payload['messageTimestamp'];
         $this->status = $payload['status'];
