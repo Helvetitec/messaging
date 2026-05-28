@@ -141,9 +141,9 @@ class MessageData
     /**
      * Function used to send the message, if sent by API
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $sendFunction;
+    public readonly ?string $sendFunction;
     /**
      * Payload sent. Serialized JSON or plain text
      *
@@ -217,7 +217,7 @@ class MessageData
         $this->error = $payload['error'] ?? null;
         $this->content = $payload['content'];
         $this->wasSentByApi = $payload['wasSentByApi'] ?? null;
-        $this->sendFunction = $payload['sendFunction'];
+        $this->sendFunction = $payload['sendFunction'] ?? null;
         $this->sendPayload = $payload['sendPayload'];
         $this->fileUrl = $payload['fileUrl'];
         $this->sendFolderId = $payload['send_folder_id'];
