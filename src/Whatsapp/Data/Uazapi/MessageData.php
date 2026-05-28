@@ -111,9 +111,9 @@ class MessageData
     /**
      * Id of the selected/pressed button or item in the list
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $buttonOrListId;
+    public readonly ?string $buttonOrListId;
     /**
      * Owner of the message
      *
@@ -212,7 +212,7 @@ class MessageData
         $this->reaction = $payload['reaction'];
         $this->vote = $payload['vote'] ?? null;
         $this->convertOptions = $payload['convertOptions'];
-        $this->buttonOrListId = $payload['buttonOrListId'];
+        $this->buttonOrListId = $payload['buttonOrListId'] ?? null;
         $this->owner = $payload['owner'];
         $this->error = $payload['error'];
         $this->content = $payload['content'];
