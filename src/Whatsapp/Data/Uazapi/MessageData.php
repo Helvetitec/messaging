@@ -193,6 +193,43 @@ class MessageData
      */
     public readonly ?string $senderLid;
 
+    /**
+     * Construct Message Data
+     *
+     * @param array{
+     *  id: string,
+     *  messageid: string,
+     *  chatid: string,
+     *  sender: string,
+     *  senderName: string,
+     *  isGroup: bool,
+     *  fromMe: bool,
+     *  messageType: string,
+     *  source: string,
+     *  messageTimestamp: int,
+     *  status: string,
+     *  text: string,
+     *  quoted: string,
+     *  edited: string,
+     *  reaction: string,
+     *  vote?: string,
+     *  convertOptions: string,
+     *  buttonOrListId?: string,
+     *  owner: string,
+     *  error?: string,
+     *  content: array,
+     *  wasSentByApi?: bool,
+     *  sendFunction?: string,
+     *  sendPayload?: string,
+     *  fileUrl?: string,
+     *  send_folder_id?: string,
+     *  track_source: string,
+     *  track_id: string,
+     *  ai_metadata?: array,
+     *  sender_pn?: string,
+     *  sender_lid?: string
+     * } $payload
+     */
     public function __construct(array $payload)
     {
         $this->id = $payload['id'];
