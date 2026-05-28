@@ -153,15 +153,15 @@ class MessageData
     /**
      * Url or reference to the messages attachment
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $fileUrl;
+    public readonly ?string $fileUrl;
     /**
      * Folder if message was sent as mass message
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $sendFolderId;
+    public readonly ?string $sendFolderId;
     /**
      * Tracking source for CRM
      *
@@ -177,21 +177,21 @@ class MessageData
     /**
      * Metadata of the AI processing
      *
-     * @var array
+     * @var ?array
      */
-    public readonly array $aiMetadata;
+    public readonly ?array $aiMetadata;
     /**
      * Resolved PN/JID of the sender
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $senderPn;
+    public readonly ?string $senderPn;
     /**
      * LID of the sender
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $senderLid;
+    public readonly ?string $senderLid;
 
     public function __construct(array $payload)
     {
@@ -219,12 +219,12 @@ class MessageData
         $this->wasSentByApi = $payload['wasSentByApi'] ?? null;
         $this->sendFunction = $payload['sendFunction'] ?? null;
         $this->sendPayload = $payload['sendPayload'] ?? null;
-        $this->fileUrl = $payload['fileUrl'];
-        $this->sendFolderId = $payload['send_folder_id'];
+        $this->fileUrl = $payload['fileUrl'] ?? null;
+        $this->sendFolderId = $payload['send_folder_id'] ?? null;
         $this->trackSource = $payload['track_source'];
         $this->trackId = $payload['track_id'];
-        $this->aiMetadata = $payload['ai_metadata'];
-        $this->senderPn = $payload['sender_pn'];
-        $this->senderLid = $payload['sender_lid'];
+        $this->aiMetadata = $payload['ai_metadata'] ?? null;
+        $this->senderPn = $payload['sender_pn'] ?? null;
+        $this->senderLid = $payload['sender_lid'] ?? null;
     }
 }
