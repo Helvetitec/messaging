@@ -99,9 +99,9 @@ class MessageData
     /**
      * Voting data from the list or poll
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $vote;
+    public readonly ?string $vote;
     /**
      * Conversion of the options of the message, list, poll and button
      *
@@ -210,7 +210,7 @@ class MessageData
         $this->quoted = $payload['quoted'];
         $this->edited = $payload['edited'];
         $this->reaction = $payload['reaction'];
-        $this->vote = $payload['vote'];
+        $this->vote = $payload['vote'] ?? null;
         $this->convertOptions = $payload['convertOptions'];
         $this->buttonOrListId = $payload['buttonOrListId'];
         $this->owner = $payload['owner'];
