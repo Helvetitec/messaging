@@ -11,6 +11,7 @@ use Helvetitec\Messaging\Whatsapp\Data\Uazapi\MessageData;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\MessageConfigDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\SystemStatusDto;
 use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\InstanceStatusResponse;
+use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\LoadMessagesResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Admin\UazapiAdmin;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Contacts\UazapiContacts;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Instance\UazapiInstance;
@@ -79,6 +80,12 @@ class UazapiHandler implements WhatsappHandler
     {
         $messagesEndpoint = new UazapiMessages($this->subdomain, $this->token);
         return $messagesEndpoint->loadMessage($messageId);
+    }
+
+    public function loadMessages(string $chatId, int $limit, int $offset): LoadMessagesResponse
+    {
+        $messagesEndpoint = new UazapiMessages($this->subdomain, $this->token);
+        return $messagesEndpoint->loadMessagesFromChat($chatId, $limit, $offset);
     }
     #endregion
 
