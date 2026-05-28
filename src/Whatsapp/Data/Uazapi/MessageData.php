@@ -123,9 +123,9 @@ class MessageData
     /**
      * Error message in case it failed
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $error;
+    public readonly ?string $error;
     /**
      * Full content of the message, serialized json or plain text
      *
@@ -214,7 +214,7 @@ class MessageData
         $this->convertOptions = $payload['convertOptions'];
         $this->buttonOrListId = $payload['buttonOrListId'] ?? null;
         $this->owner = $payload['owner'];
-        $this->error = $payload['error'];
+        $this->error = $payload['error'] ?? null;
         $this->content = $payload['content'];
         $this->wasSentByApi = $payload['wasSentByApi'];
         $this->sendFunction = $payload['sendFunction'];
