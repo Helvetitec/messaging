@@ -7,12 +7,14 @@ use Helvetitec\Messaging\Enums\StoryMediaType;
 use Helvetitec\Messaging\Enums\Uazapi\PixType;
 use Helvetitec\Messaging\Enums\WhatsappPresence;
 use Helvetitec\Messaging\Whatsapp\Data\Uazapi\InstanceData;
+use Helvetitec\Messaging\Whatsapp\Data\Uazapi\MessageData;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\MessageConfigDto;
 use Helvetitec\Messaging\Whatsapp\DTOs\Uazapi\SystemStatusDto;
 use Helvetitec\Messaging\Whatsapp\Responses\Uazapi\InstanceStatusResponse;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Admin\UazapiAdmin;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Contacts\UazapiContacts;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Instance\UazapiInstance;
+use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Messages\UazapiMessages;
 use Helvetitec\Messaging\Whatsapp\Uazapi\Endpoints\Messages\UazapiSendMessages;
 use Illuminate\Support\Collection;
 
@@ -72,7 +74,15 @@ class UazapiHandler implements WhatsappHandler
         return $this;
     }
 
-    #region Messages
+    #region Messages 
+    public function findMessage(string $messageId): MessageData
+    {
+        $messagesEndpoint = new UazapiMessages($this->subdomain, $this->token);
+        return $messagesEndpoint->loadMessage($messageId);
+    }
+    #endregion
+
+    #region Send Messages
     public function sendText(string $text, bool $linkPreview = false): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
