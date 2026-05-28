@@ -135,9 +135,9 @@ class MessageData
     /**
      * Was the message sent by the API?
      *
-     * @var boolean
+     * @var ?boolean
      */
-    public readonly bool $wasSentByApi;
+    public readonly ?bool $wasSentByApi;
     /**
      * Function used to send the message, if sent by API
      *
@@ -216,7 +216,7 @@ class MessageData
         $this->owner = $payload['owner'];
         $this->error = $payload['error'] ?? null;
         $this->content = $payload['content'];
-        $this->wasSentByApi = $payload['wasSentByApi'];
+        $this->wasSentByApi = $payload['wasSentByApi'] ?? null;
         $this->sendFunction = $payload['sendFunction'];
         $this->sendPayload = $payload['sendPayload'];
         $this->fileUrl = $payload['fileUrl'];
