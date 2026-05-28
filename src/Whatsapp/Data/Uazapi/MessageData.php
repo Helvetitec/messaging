@@ -147,9 +147,9 @@ class MessageData
     /**
      * Payload sent. Serialized JSON or plain text
      *
-     * @var string
+     * @var ?string
      */
-    public readonly string $sendPayload;
+    public readonly ?string $sendPayload;
     /**
      * Url or reference to the messages attachment
      *
@@ -218,7 +218,7 @@ class MessageData
         $this->content = $payload['content'];
         $this->wasSentByApi = $payload['wasSentByApi'] ?? null;
         $this->sendFunction = $payload['sendFunction'] ?? null;
-        $this->sendPayload = $payload['sendPayload'];
+        $this->sendPayload = $payload['sendPayload'] ?? null;
         $this->fileUrl = $payload['fileUrl'];
         $this->sendFolderId = $payload['send_folder_id'];
         $this->trackSource = $payload['track_source'];
