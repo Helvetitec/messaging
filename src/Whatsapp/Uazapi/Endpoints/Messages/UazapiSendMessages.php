@@ -62,130 +62,130 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      * Sends an image from a file to a number with caption.
      *
      * @param string $number
-     * @param string $file
+     * @param string $fileOrBase64
      * @param string $caption
      * @param MessageConfigDto $messageConfig
      * @return MessageData
      */
     public function sendImage(
         string $number, 
-        string $file, 
+        string $fileOrBase64, 
         string $caption, 
         ?MessageConfigDto $messageConfig = null
     ): MessageData
     {
-        return $this->sendMedia($number, MediaType::IMAGE, $file, $caption, null, $messageConfig);
+        return $this->sendMedia($number, MediaType::IMAGE, $fileOrBase64, $caption, null, $messageConfig);
     }
 
     /**
      * Sends a video from a file to a number with caption
      *
      * @param string $number
-     * @param string $file
+     * @param string $fileOrBase64
      * @param string $caption
      * @param MessageConfigDto $messageConfig
      * @return MessageData
      */
     public function sendVideo(
         string $number, 
-        string $file, 
+        string $fileOrBase64, 
         string $caption, 
         ?MessageConfigDto $messageConfig = null
     ): MessageData
     {
-        return $this->sendMedia($number, MediaType::VIDEO, $file, $caption, null, $messageConfig);
+        return $this->sendMedia($number, MediaType::VIDEO, $fileOrBase64, $caption, null, $messageConfig);
     }
 
     /**
      * Sends an audio file to a number from a file.
      *
      * @param string $number
-     * @param string $file
+     * @param string $fileOrBase64
      * @param MessageConfigDto $messageConfig
      * @return MessageData
      */
     public function sendAudio(
         string $number, 
-        string $file, 
+        string $fileOrBase64, 
         ?MessageConfigDto $messageConfig = null
     ): MessageData
     {
-        return $this->sendMedia($number, MediaType::AUDIO, $file, null, null, $messageConfig);
+        return $this->sendMedia($number, MediaType::AUDIO, $fileOrBase64, null, null, $messageConfig);
     }
 
     /**
      * Sends a MyAudio file from a file to a number.
      *
      * @param string $number
-     * @param string $file
+     * @param string $fileOrBase64
      * @param MessageConfigDto $messageConfig
      * @return MessageData
      */
     public function sendMyAudio(
         string $number, 
-        string $file, 
+        string $fileOrBase64, 
         ?MessageConfigDto $messageConfig = null
     ): MessageData
     {
-        return $this->sendMedia($number, MediaType::MYAUDIO, $file, null, null, $messageConfig);
+        return $this->sendMedia($number, MediaType::MYAUDIO, $fileOrBase64, null, null, $messageConfig);
     }
 
     /**
      * Sends a Push-To-Talk message to a number
      *
      * @param string $number
-     * @param string $file
+     * @param string $fileOrBase64
      * @param MessageConfigDto $messageConfig
      * @return MessageData
      */
     public function sendPtt(
         string $number, 
-        string $file, 
+        string $fileOrBase64, 
         ?MessageConfigDto $messageConfig = null
     ): MessageData
     {
-        return $this->sendMedia($number, MediaType::PTT, $file, null, null, $messageConfig);
+        return $this->sendMedia($number, MediaType::PTT, $fileOrBase64, null, null, $messageConfig);
     }
 
     /**
      * Sends a Push-To-Video to a number
      *
      * @param string $number
-     * @param string $file
+     * @param string $fileOrBase64
      * @param MessageConfigDto $messageConfig
      * @return MessageData
      */
     public function sendPtv(
         string $number, 
-        string $file, 
+        string $fileOrBase64, 
         ?MessageConfigDto $messageConfig = null
     ): MessageData
     {
-        return $this->sendMedia($number, MediaType::PTV, $file, null, null, $messageConfig);
+        return $this->sendMedia($number, MediaType::PTV, $fileOrBase64, null, null, $messageConfig);
     }
 
     /**
      * Sends a sticker to a number
      *
      * @param string $number
-     * @param string $file
+     * @param string $fileOrBase64
      * @param MessageConfigDto $messageConfig
      * @return MessageData
      */
     public function sendSticker(
         string $number, 
-        string $file, 
+        string $fileOrBase64, 
         ?MessageConfigDto $messageConfig = null
     ): MessageData
     {
-        return $this->sendMedia($number, MediaType::STICKER, $file, null, null, $messageConfig);
+        return $this->sendMedia($number, MediaType::STICKER, $fileOrBase64, null, null, $messageConfig);
     }
 
     /**
      * Sends a document to a number with optional docName and caption.
      *
      * @param string $number
-     * @param string $file
+     * @param string $fileOrBase64
      * @param string $docName
      * @param string $caption
      * @param MessageConfigDto $messageConfig
@@ -193,13 +193,13 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      */
     public function sendDocument(
         string $number, 
-        string $file, 
+        string $fileOrBase64, 
         string $docName, 
         string $caption, 
         ?MessageConfigDto $messageConfig = null
     ): MessageData
     {
-        return $this->sendMedia($number, MediaType::DOCUMENT, $file, $caption, $docName, $messageConfig);
+        return $this->sendMedia($number, MediaType::DOCUMENT, $fileOrBase64, $caption, $docName, $messageConfig);
     }
 
     /**
@@ -207,7 +207,7 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
      *
      * @param string $number
      * @param MediaType $type
-     * @param string $file
+     * @param string $fileOrBase64
      * @param string|null $text
      * @param string|null $docName
      * @param MessageConfigDto $messageConfig
@@ -216,7 +216,7 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
     public function sendMedia(
         string $number, 
         MediaType $type, 
-        string $file, 
+        string $fileOrBase64, 
         ?string $text = null, 
         ?string $docName = null, 
         ?MessageConfigDto $messageConfig = null
@@ -226,7 +226,7 @@ class UazapiSendMessages extends UazapiInstanceEndpoint
         $data = array_merge([
             'number' => $number,
             'type' => $type->value,
-            'file' => $file,
+            'file' => $fileOrBase64,
             'text' => $text,
             'docName' => $docName
         ], $messageConfig->to());

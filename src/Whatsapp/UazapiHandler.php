@@ -101,91 +101,91 @@ class UazapiHandler implements WhatsappHandler
         return $response->messageId;
     }
 
-    public function sendImage(string $file, string $caption): string
+    public function sendImage(string $fileOrBase64, string $caption): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
         );
-        $response = $sendMessagesEndpoint->sendImage($this->receiver, $file, $caption, $messageConfig);
+        $response = $sendMessagesEndpoint->sendImage($this->receiver, $fileOrBase64, $caption, $messageConfig);
         return $response->messageId;
     }
 
-    public function sendVideo(string $file, string $caption): string
+    public function sendVideo(string $fileOrBase64, string $caption): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
         );
-        $response = $sendMessagesEndpoint->sendVideo($this->receiver, $file, $caption, $messageConfig);
+        $response = $sendMessagesEndpoint->sendVideo($this->receiver, $fileOrBase64, $caption, $messageConfig);
         return $response->messageId;
     }
 
-    public function sendAudio(string $file): string
+    public function sendAudio(string $fileOrBase64): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
         );
-        $response = $sendMessagesEndpoint->sendAudio($this->receiver, $file, $messageConfig);
+        $response = $sendMessagesEndpoint->sendAudio($this->receiver, $fileOrBase64, $messageConfig);
         return $response->messageId;
     }
 
-    public function sendMyAudio(string $file): string
+    public function sendMyAudio(string $fileOrBase64): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
         );
-        $response = $sendMessagesEndpoint->sendMyAudio($this->receiver, $file, $messageConfig);
+        $response = $sendMessagesEndpoint->sendMyAudio($this->receiver, $fileOrBase64, $messageConfig);
         return $response->messageId;
     }
 
-    public function sendPtt(string $file): string
+    public function sendPtt(string $fileOrBase64): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
         );
-        $response = $sendMessagesEndpoint->sendPtt($this->receiver, $file, $messageConfig);
+        $response = $sendMessagesEndpoint->sendPtt($this->receiver, $fileOrBase64, $messageConfig);
         return $response->messageId;
     }
 
-    public function sendPtv(string $file): string
+    public function sendPtv(string $fileOrBase64): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
         );
-        $response = $sendMessagesEndpoint->sendPtv($this->receiver, $file, $messageConfig);
+        $response = $sendMessagesEndpoint->sendPtv($this->receiver, $fileOrBase64, $messageConfig);
         return $response->messageId;
     }
 
-    public function sendSticker(string $file): string
+    public function sendSticker(string $fileOrBase64): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
         );
-        $response = $sendMessagesEndpoint->sendSticker($this->receiver, $file, $messageConfig);
+        $response = $sendMessagesEndpoint->sendSticker($this->receiver, $fileOrBase64, $messageConfig);
         return $response->messageId;
     }
 
-    public function sendDocument(string $file, string $docName, string $caption): string
+    public function sendDocument(string $fileOrBase64, string $docName, string $caption): string
     {
         $sendMessagesEndpoint = new UazapiSendMessages($this->subdomain, $this->token);
         $messageConfig = new MessageConfigDto(
             delay: $this->delay,
             replyId: $this->replyId
         );
-        $response = $sendMessagesEndpoint->sendDocument($this->receiver, $file, $docName, $caption, $messageConfig);
+        $response = $sendMessagesEndpoint->sendDocument($this->receiver, $fileOrBase64, $docName, $caption, $messageConfig);
         return $response->messageId;
     }
 
