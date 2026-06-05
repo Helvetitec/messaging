@@ -32,6 +32,38 @@ class InstanceData
     public readonly string $createdAt;
     public readonly string $updatedAt;
 
+    /**
+     * @param array{
+     *  id: string,
+     *  token: string,
+     *  status: string,
+     *  paircode: string,
+     *  qrcode: string,
+     *  name: string,
+     *  profileName: string,
+     *  profilePicUrl: string,
+     *  isBusiness: bool,
+     *  platform?: string,
+     *  plataform?: string,
+     *  systemName: string,
+     *  owner: string,
+     *  current_presence: string,
+     *  lastDisconnect: string,
+     *  lastDisconnectReason: string,
+     *  adminField01: string,
+     *  adminField02: string,
+     *  openai_apikey: string,
+     *  chatbot_enabled: bool,
+     *  chatbot_ignoreGroups: bool,
+     *  chatbot_stopConversation: string,
+     *  chatbot_stopMinutes: int,
+     *  chatbot_stopWhenYouSendMsg: int,
+     *  fieldsMap?: array,
+     *  currentTime: string,
+     *  created: string,
+     *  updated: string
+     * } $payload
+     */
     public function __construct(array $payload)
     {
         $this->id = $payload['id'];
