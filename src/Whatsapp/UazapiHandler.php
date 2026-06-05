@@ -352,6 +352,15 @@ class UazapiHandler implements WhatsappHandler
         return $adminEndpoint->createInstance($name, $adminField01, $adminField02);
     }
 
+    /**
+     * @return Collection<int, InstanceData>
+     */
+    public function listInstances(): Collection
+    {
+        $adminEndpoint = new UazapiAdmin($this->subdomain, $this->adminToken);
+        return $adminEndpoint->listInstances();
+    }
+
     public function systemStatus(): SystemStatusDto
     {
         $adminEndpoint = new UazapiAdmin($this->subdomain, $this->adminToken);

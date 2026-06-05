@@ -53,7 +53,7 @@ final class UazapiAdmin extends UazapiAdminEndpoint
     /**
      * Returns a collection of InstanceData objects created.
      *
-     * @return Collection
+     * @return Collection<int, InstanceData>
      */
     public function listInstances(): Collection
     {
