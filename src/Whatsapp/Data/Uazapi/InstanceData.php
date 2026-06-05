@@ -95,6 +95,7 @@ class InstanceData
         $this->currentTime = $payload['currentTime'];
         $this->createdAt = $payload['created'];
         $this->updatedAt = $payload['updated'];
+        
     }
 
 }
