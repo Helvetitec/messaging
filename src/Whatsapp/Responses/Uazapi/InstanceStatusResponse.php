@@ -15,7 +15,7 @@ class InstanceStatusResponse
     {
         $this->instance = $instance;
         $this->status = $status;
-        $this->instanceStatus = $instance->status == 'connected' ? InstanceStatus::CONNECTED : ($instance->status == 'connecting' ? InstanceStatus::CONNECTING : InstanceStatus::DISCONNECTED);
+        $this->instanceStatus = $instance->status;
     }
 
     public function isConnected(): bool

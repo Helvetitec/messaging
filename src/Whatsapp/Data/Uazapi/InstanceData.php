@@ -2,11 +2,13 @@
 
 namespace Helvetitec\Messaging\Whatsapp\Data\Uazapi;
 
+use Helvetitec\Messaging\Enums\InstanceStatus;
+
 class InstanceData
 {
     public readonly string $id;
     public readonly string $token;
-    public readonly string $status;
+    public readonly InstanceStatus $status;
     public readonly string $paircode;
     public readonly string $qrcode;
     public readonly string $name;
@@ -68,7 +70,7 @@ class InstanceData
     {
         $this->id = $payload['id'];
         $this->token = $payload['token'];
-        $this->status = $payload['status'];
+        $this->status = InstanceStatus::from($payload['status']);
         $this->paircode = $payload['paircode'];
         $this->qrcode = $payload['qrcode'];
         $this->name = $payload['name'];
