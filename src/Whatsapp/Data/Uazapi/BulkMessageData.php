@@ -20,7 +20,7 @@ class BulkMessageData
     public readonly string $createdAt;
     public readonly string $updatedAt;
 
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->id = $data['id'];
         $this->info = $data['info'];
