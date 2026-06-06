@@ -12,6 +12,17 @@ final class WebhookData
     public readonly bool $addUrlEvents;
     public readonly bool $addUrlTypesMessages;
 
+    /**
+     * @param array{
+     *  id: int,
+     *  enabled: bool,
+     *  url: string,
+     *  events: array,
+     *  excludeMessages: array,
+     *  addUrlEvents: bool,
+     *  addUrlTypesMessages: bool
+     * } $data
+     */
     public function __construct(array $data)
     {
         $this->id = $data['id'];

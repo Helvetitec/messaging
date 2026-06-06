@@ -20,6 +20,25 @@ class BulkMessageData
     public readonly string $createdAt;
     public readonly string $updatedAt;
 
+    /**
+     * @param array{
+     *  id: string,
+     *  info: string,
+     *  status: string,
+     *  scheduled_for: int,
+     *  delayMax: int,
+     *  delayMin: int,
+     *  log_delivered: int,
+     *  log_failed: int,
+     *  log_played: int,
+     *  log_read: int,
+     *  log_sucess: int,
+     *  log_total: int,
+     *  owner: string,
+     *  created_at: string,
+     *  updated_at: string
+     * } $data
+     */
     public function __construct(array $data)
     {
         $this->id = $data['id'];

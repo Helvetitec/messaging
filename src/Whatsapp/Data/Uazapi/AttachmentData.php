@@ -9,7 +9,15 @@ class AttachmentData
     public readonly ?string $base64Data;
     public readonly ?string $transcription;
 
-    public function __construct($data)
+    /**
+     * @param array{
+     *  fileUrl?: string,
+     *  mimeType?: string,
+     *  base64Data?: string,
+     *  transcription?: string
+     * } $data
+     */
+    public function __construct(array $data)
     {
         $this->fileUrl = $data['fileUrl'] ?? null;
         $this->mimeType = $data['mimeType'] ?? null;

@@ -11,7 +11,17 @@ class LabelData
     public readonly string $createdAt;
     public readonly string $updatedAt;
 
-    public function __construct($data)
+    /**
+     * @param array{
+     *  id: string,
+     *  name: string,
+     *  color: string,
+     *  colorHex: string,
+     *  created: string,
+     *  updated: string
+     * } $data
+     */
+    public function __construct(array $data)
     {
         $this->id = $data['id'];
         $this->name = $data['name'];

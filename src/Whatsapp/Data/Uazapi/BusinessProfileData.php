@@ -11,7 +11,17 @@ class BusinessProfileData
     public readonly array $websites;
     public readonly array $categories;
     
-    public function __construct($data)
+    /**
+     * @param array{
+     *  tag: string,
+     *  description: string,
+     *  address: string,
+     *  email: string,
+     *  websites: array,
+     *  categories: array
+     * } $data
+     */
+    public function __construct(array $data)
     {
         $this->tag = $data['tag'];
         $this->description = $data['description'];

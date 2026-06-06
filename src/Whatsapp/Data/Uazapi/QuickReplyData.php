@@ -15,7 +15,21 @@ class QuickReplyData
     public readonly string $createdAt;
     public readonly string $updatedAt;
 
-    public function __construct($data)
+    /**
+     * @param array{
+     *  id: string,
+     *  onWhatsApp: bool,
+     *  docName: string,
+     *  file: string,
+     *  shortCut: string,
+     *  text: string,
+     *  type: string,
+     *  owner: string,
+     *  created: string,
+     *  updated: string
+     * } $data
+     */
+    public function __construct(array $data)
     {
         $this->id = $data['id'];
         $this->onWhatsApp = $data['onWhatsApp'];

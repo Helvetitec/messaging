@@ -12,6 +12,17 @@ class NumberVerifyData
     public readonly ?string $groupName;
     public readonly ?string $error;
 
+    /**
+     * @param array{
+     *  query: string,
+     *  jid: string,
+     *  lid: string,
+     *  isInWhatsapp: bool,
+     *  verifiedName?: string,
+     *  groupName?: string,
+     *  error?: string
+     * } $data
+     */
     public function __construct(array $data)
     {
         $this->query = $data['query'];

@@ -10,7 +10,16 @@ class BusinessProductsData
     public readonly string $price;
     public readonly string $currency;
 
-    public function __construct($data)
+    /**
+     * @param array{
+     *  id: string,
+     *  name: string,
+     *  description: string,
+     *  price: string,
+     *  currency: string
+     * } $data
+     */
+    public function __construct(array $data)
     {
         $this->id = $data['id'];
         $this->name = $data['name'];
