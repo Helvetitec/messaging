@@ -8,6 +8,6 @@ final class UazapiWebhook
 {
     public function process(Request $request)
     {
-        
+        throw new \Exception("Not Implemented");
     }
 }
