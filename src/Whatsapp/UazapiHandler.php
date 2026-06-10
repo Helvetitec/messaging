@@ -323,6 +323,12 @@ class UazapiHandler implements WhatsappHandler
         $response = $sendMessagesEndpoint->requestLocation($this->receiver, $text, $messageConfig);
         return $response->messageId;
     }
+
+    public function sendReaction(string $messageId, string $reaction): string
+    {
+        $messagesEndpoint = new UazapiMessages($this->subdomain, $this->token);
+        return $messagesEndpoint->sendReaction($this->receiver, $reaction, $messageId);
+    }
     #endregion
     
     #region Contacts
