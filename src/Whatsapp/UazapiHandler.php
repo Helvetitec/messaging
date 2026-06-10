@@ -87,6 +87,12 @@ class UazapiHandler implements WhatsappHandler
         $messagesEndpoint = new UazapiMessages($this->subdomain, $this->token);
         return $messagesEndpoint->loadMessagesFromChat($chatId, $limit, $offset);
     }
+
+    public function deleteMessage(string $messageId): void
+    {
+        $messagesEndpoint = new UazapiMessages($this->subdomain, $this->token);
+        $messagesEndpoint->deleteMessage($messageId);
+    }
     #endregion
 
     #region Send Messages

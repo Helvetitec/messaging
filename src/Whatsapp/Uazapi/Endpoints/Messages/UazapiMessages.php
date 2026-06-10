@@ -272,9 +272,11 @@ class UazapiMessages extends UazapiInstanceEndpoint
      * Deletes a message.
      *
      * @param string $messageId
-     * @return true
+     * @return void
+     * @throws HttpStatusException
+     * @throws \Illuminate\Http\Client\ConnectionException
      */
-    public function deleteMessage(string $messageId): true
+    public function deleteMessage(string $messageId): void
     {
         $url = $this->root().'message/delete';
         $response = Http::asJson()->withHeader('token', $this->token)->post($url,[
@@ -294,8 +296,6 @@ class UazapiMessages extends UazapiInstanceEndpoint
                 throw new HttpStatusException($response->status(), "[UAZAPI] Failed with status {{ $status }}: {{ $body }}");
             }
         }
-
-        return true;
     }
 
     /**
